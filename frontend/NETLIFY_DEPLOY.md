@@ -4,6 +4,15 @@
 
 - `.env.production` - Chứa biến môi trường `NEXT_PUBLIC_API_URL=https://xlbackend.onrender.com`
 - `netlify.toml` - Cấu hình build và deploy cho Netlify
+- `package.json` - Đã có đầy đủ build scripts:
+  ```json
+  {
+    "scripts": {
+      "build": "next build",
+      "start": "next start"
+    }
+  }
+  ```
 
 ## 2. Các bước deploy trên Netlify
 
