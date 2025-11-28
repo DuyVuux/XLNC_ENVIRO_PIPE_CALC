@@ -155,3 +155,5 @@ if __name__ == "__main__":
         print(f"❌ Cannot connect to backend: {str(e)}")
         print("Please start: cd backend && source .venv/bin/activate && uvicorn app.main:app --reload --port 8000")
 
+
+

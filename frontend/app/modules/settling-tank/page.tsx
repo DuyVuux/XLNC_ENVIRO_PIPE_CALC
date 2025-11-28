@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { calculateSettlingTank } from "@/lib/api";
-import InputField from "@/components/InputField";
-import SelectField from "@/components/SelectField";
-import ResultsDisplay from "@/components/ResultsDisplay";
+import ModuleSidebar from "@/components/modules/ModuleSidebar";
+import SettlingTankResultsSection from "@/components/modules/SettlingTankResultsSection";
+import EquationsSection from "@/components/modules/EquationsSection";
 
 interface SettlingTankInput {
   Q: number;
@@ -52,123 +52,186 @@ export default function SettlingTankPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Module 4: Bể lắng / Settling Tank
-          </h1>
-          <p className="text-gray-600">
-            Tính toán diện tích, thể tích và hiệu suất lắng theo TCVN 7222:2002, TCVN 33-2006
-          </p>
+    <div className="relative flex min-h-screen w-full">
+      <ModuleSidebar />
+
+      <main className="flex-1 p-6 lg:p-10">
+        <div className="w-full max-w-4xl mx-auto">
+          <header className="flex flex-col gap-3 mb-8 bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+            <h1 className="text-gray-900 dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
+              Module 4: Settling Tank Calculator
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 text-lg font-normal leading-normal max-w-3xl">
+              Calculate area, volume and settling efficiency according to TCVN 7222:2002, TCVN 33-2006
+            </p>
+          </header>
+
+          <main className="space-y-8">
+            <section className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                Input Parameters
+              </h3>
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="flow-rate"
+                  >
+                    Flow rate Q <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="flow-rate"
+                    name="flow-rate"
+                    type="number"
+                    value={formData.Q}
+                    onChange={(e) => handleInputChange("Q", parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    required
+                    min={0.0001}
+                    step={0.0001}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="flow-rate-unit"
+                  >
+                    Flow rate unit <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="flow-rate-unit"
+                    name="flow-rate-unit"
+                    value={formData.Q_unit}
+                    onChange={(e) => handleInputChange("Q_unit", e.target.value)}
+                    required
+                  >
+                    <option value="m3/s">m³/s</option>
+                    <option value="m3/h">m³/h</option>
+                    <option value="m3/day">m³/ngày</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="settling-velocity"
+                  >
+                    Settling velocity U_o (m/s)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="settling-velocity"
+                    name="settling-velocity"
+                    type="number"
+                    value={formData.U_o || 0.00025}
+                    onChange={(e) => handleInputChange("U_o", parseFloat(e.target.value) || 0)}
+                    placeholder="0.00025"
+                    min={0.0001}
+                    step={0.00001}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="inclined-angle"
+                  >
+                    Inclined angle α (°)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="inclined-angle"
+                    name="inclined-angle"
+                    type="number"
+                    value={formData.alpha || 60}
+                    onChange={(e) => handleInputChange("alpha", parseFloat(e.target.value) || 0)}
+                    placeholder="60"
+                    min={0}
+                    max={90}
+                    step={1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="actual-height"
+                  >
+                    Actual height H₀ (m)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="actual-height"
+                    name="actual-height"
+                    type="number"
+                    value={formData.H_0 || 0.9}
+                    onChange={(e) => handleInputChange("H_0", parseFloat(e.target.value) || 0)}
+                    placeholder="0.9"
+                    min={0.1}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="settling-pipe-width"
+                  >
+                    Settling pipe width W (m)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="settling-pipe-width"
+                    name="settling-pipe-width"
+                    type="number"
+                    value={formData.W || 0.05}
+                    onChange={(e) => handleInputChange("W", parseFloat(e.target.value) || 0)}
+                    placeholder="0.05"
+                    min={0.01}
+                    step={0.01}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="safety-factor"
+                  >
+                    Safety factor α
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="safety-factor"
+                    name="safety-factor"
+                    type="number"
+                    value={formData.alpha_safety || 1.05}
+                    onChange={(e) => handleInputChange("alpha_safety", parseFloat(e.target.value) || 0)}
+                    placeholder="1.05"
+                    min={1.0}
+                    step={0.01}
+                  />
+                </div>
+                <div className="md:col-span-2 flex justify-center mt-4">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-blue-600 text-white font-bold py-3 px-12 rounded-lg shadow-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-offset-gray-800"
+                  >
+                    {loading ? "Calculating..." : "Calculate"}
+                  </button>
+                </div>
+              </form>
+
+              {error && (
+                <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+                  <p className="text-red-800 dark:text-red-200 text-base">{error}</p>
+                </div>
+              )}
+            </section>
+
+            <SettlingTankResultsSection result={result} />
+
+            <EquationsSection />
+          </main>
         </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">Thông số Đầu vào</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <InputField
-                label="Lưu lượng Q"
-                name="Q"
-                type="number"
-                value={formData.Q}
-                onChange={(value) => handleInputChange("Q", value)}
-                unit=""
-                required
-                min={0.0001}
-                step={0.0001}
-              />
-              <SelectField
-                label="Đơn vị lưu lượng"
-                name="Q_unit"
-                value={formData.Q_unit}
-                onChange={(value) => handleInputChange("Q_unit", value)}
-                options={[
-                  { value: "m3/s", label: "m³/s" },
-                  { value: "m3/h", label: "m³/h" },
-                  { value: "m3/day", label: "m³/ngày" },
-                ]}
-                required
-              />
-              <InputField
-                label="Tốc độ lắng U_o"
-                name="U_o"
-                type="number"
-                value={formData.U_o || 0.00025}
-                onChange={(value) => handleInputChange("U_o", value)}
-                unit="m/s"
-                min={0.0001}
-                step={0.00001}
-              />
-              <InputField
-                label="Góc nghiêng α"
-                name="alpha"
-                type="number"
-                value={formData.alpha || 60}
-                onChange={(value) => handleInputChange("alpha", value)}
-                unit="°"
-                min={0}
-                max={90}
-                step={1}
-              />
-              <InputField
-                label="Chiều cao thực tế H₀"
-                name="H_0"
-                type="number"
-                value={formData.H_0 || 0.9}
-                onChange={(value) => handleInputChange("H_0", value)}
-                unit="m"
-                min={0.1}
-                step={0.1}
-              />
-              <InputField
-                label="Chiều rộng ống lắng W"
-                name="W"
-                type="number"
-                value={formData.W || 0.05}
-                onChange={(value) => handleInputChange("W", value)}
-                unit="m"
-                min={0.01}
-                step={0.01}
-              />
-              <InputField
-                label="Hệ số an toàn α"
-                name="alpha_safety"
-                type="number"
-                value={formData.alpha_safety || 1.05}
-                onChange={(value) => handleInputChange("alpha_safety", value)}
-                unit=""
-                min={1.0}
-                step={0.01}
-              />
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading ? "Đang tính toán..." : "Tính toán"}
-              </button>
-            </form>
-
-            {error && (
-              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
-                <p className="text-red-800 text-sm">{error}</p>
-              </div>
-            )}
-          </div>
-
-          <div className="lg:col-span-1">
-            {result && <ResultsDisplay result={result} />}
-            {!result && !loading && (
-              <div className="bg-white rounded-lg shadow-lg p-6 text-center text-gray-500">
-                <p>Nhập thông số và nhấn "Tính toán" để xem kết quả</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }
-

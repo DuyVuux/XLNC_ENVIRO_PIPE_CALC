@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { calculateMixingReaction } from "@/lib/api";
-import InputField from "@/components/InputField";
-import SelectField from "@/components/SelectField";
-import ResultsDisplay from "@/components/ResultsDisplay";
+import ModuleSidebar from "@/components/modules/ModuleSidebar";
+import MixingReactionResultsSection from "@/components/modules/MixingReactionResultsSection";
+import EquationsSection from "@/components/modules/EquationsSection";
 
 interface MixingReactionInput {
   Q: number;
@@ -58,155 +58,244 @@ export default function MixingReactionPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Module 3: Ngăn trộn Phản ứng / Rapid Mixing Reaction
-          </h1>
-          <p className="text-gray-600">
-            Tính toán thể tích ngăn trộn, tốc độ phản ứng và hiệu suất oxy hóa theo TCVN 7222:2002
-          </p>
+    <div className="relative flex min-h-screen w-full">
+      <ModuleSidebar />
+
+      <main className="flex-1 p-6 lg:p-10">
+        <div className="w-full max-w-4xl mx-auto">
+          <header className="flex flex-col gap-3 mb-8 bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+            <h1 className="text-gray-900 dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
+              Module 3: Rapid Mixing Reaction Calculator
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 text-lg font-normal leading-normal max-w-3xl">
+              Calculate mixing tank volume, reaction rate, and oxidation efficiency according to TCVN 7222:2002
+            </p>
+          </header>
+
+          <main className="space-y-8">
+            <section className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                Input Parameters
+              </h3>
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="flow-rate"
+                  >
+                    Flow rate Q <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="flow-rate"
+                    name="flow-rate"
+                    type="number"
+                    value={formData.Q}
+                    onChange={(e) => handleInputChange("Q", parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    required
+                    min={0.0001}
+                    step={0.0001}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="flow-rate-unit"
+                  >
+                    Flow rate unit <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="flow-rate-unit"
+                    name="flow-rate-unit"
+                    value={formData.Q_unit}
+                    onChange={(e) => handleInputChange("Q_unit", e.target.value)}
+                    required
+                  >
+                    <option value="m3/s">m³/s</option>
+                    <option value="m3/h">m³/h</option>
+                    <option value="m3/day">m³/ngày</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="mixing-time"
+                  >
+                    Mixing time t <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="mixing-time"
+                    name="mixing-time"
+                    type="number"
+                    value={formData.t}
+                    onChange={(e) => handleInputChange("t", parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    required
+                    min={0.1}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="time-unit"
+                  >
+                    Time unit <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="time-unit"
+                    name="time-unit"
+                    value={formData.t_unit}
+                    onChange={(e) => handleInputChange("t_unit", e.target.value)}
+                    required
+                  >
+                    <option value="second">Second</option>
+                    <option value="minute">Minute</option>
+                    <option value="hour">Hour</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="fe2-concentration"
+                  >
+                    Initial Fe²⁺ concentration (mg/L)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="fe2-concentration"
+                    name="fe2-concentration"
+                    type="number"
+                    value={formData.Fe2_plus_0}
+                    onChange={(e) => handleInputChange("Fe2_plus_0", parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    min={0}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="h2s-concentration"
+                  >
+                    Initial H₂S concentration (mg/L)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="h2s-concentration"
+                    name="h2s-concentration"
+                    type="number"
+                    value={formData.H2S_0}
+                    onChange={(e) => handleInputChange("H2S_0", parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    min={0}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="k-fe"
+                  >
+                    Fe²⁺ reaction rate constant k_Fe (L/mg·s)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="k-fe"
+                    name="k-fe"
+                    type="number"
+                    value={formData.k_Fe}
+                    onChange={(e) => handleInputChange("k_Fe", parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    min={0.01}
+                    step={0.01}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="k-h2s"
+                  >
+                    H₂S reaction rate constant k_H2S (L/mg·s)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="k-h2s"
+                    name="k-h2s"
+                    type="number"
+                    value={formData.k_H2S}
+                    onChange={(e) => handleInputChange("k_H2S", parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    min={0.01}
+                    step={0.01}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="o2-concentration"
+                  >
+                    Oxygen concentration O₂ (mg/L) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="o2-concentration"
+                    name="o2-concentration"
+                    type="number"
+                    value={formData.O2}
+                    onChange={(e) => handleInputChange("O2", parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    required
+                    min={0.1}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="dimension-ratio"
+                  >
+                    Dimension ratio <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="dimension-ratio"
+                    name="dimension-ratio"
+                    type="text"
+                    value={formData.ty_le_kich_thuoc}
+                    onChange={(e) => handleInputChange("ty_le_kich_thuoc", e.target.value)}
+                    placeholder="L:W:H = 2:1:1"
+                    required
+                  />
+                </div>
+                <div className="md:col-span-2 flex justify-center mt-4">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-blue-600 text-white font-bold py-3 px-12 rounded-lg shadow-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-offset-gray-800"
+                  >
+                    {loading ? "Calculating..." : "Calculate"}
+                  </button>
+                </div>
+              </form>
+
+              {error && (
+                <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+                  <p className="text-red-800 dark:text-red-200 text-base">{error}</p>
+                </div>
+              )}
+            </section>
+
+            <MixingReactionResultsSection result={result} />
+
+            <EquationsSection />
+          </main>
         </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">Thông số Đầu vào</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <InputField
-                label="Lưu lượng Q"
-                name="Q"
-                type="number"
-                value={formData.Q}
-                onChange={(value) => handleInputChange("Q", value)}
-                unit=""
-                required
-                min={0.0001}
-                step={0.0001}
-              />
-              <SelectField
-                label="Đơn vị lưu lượng"
-                name="Q_unit"
-                value={formData.Q_unit}
-                onChange={(value) => handleInputChange("Q_unit", value)}
-                options={[
-                  { value: "m3/s", label: "m³/s" },
-                  { value: "m3/h", label: "m³/h" },
-                  { value: "m3/day", label: "m³/ngày" },
-                ]}
-                required
-              />
-              <InputField
-                label="Thời gian trộn t"
-                name="t"
-                type="number"
-                value={formData.t}
-                onChange={(value) => handleInputChange("t", value)}
-                unit=""
-                required
-                min={0.1}
-                step={0.1}
-              />
-              <SelectField
-                label="Đơn vị thời gian"
-                name="t_unit"
-                value={formData.t_unit}
-                onChange={(value) => handleInputChange("t_unit", value)}
-                options={[
-                  { value: "second", label: "Giây" },
-                  { value: "minute", label: "Phút" },
-                  { value: "hour", label: "Giờ" },
-                ]}
-                required
-              />
-              <InputField
-                label="Nồng độ Fe²⁺ ban đầu"
-                name="Fe2_plus_0"
-                type="number"
-                value={formData.Fe2_plus_0}
-                onChange={(value) => handleInputChange("Fe2_plus_0", value)}
-                unit="mg/L"
-                min={0}
-                step={0.1}
-              />
-              <InputField
-                label="Nồng độ H₂S ban đầu"
-                name="H2S_0"
-                type="number"
-                value={formData.H2S_0}
-                onChange={(value) => handleInputChange("H2S_0", value)}
-                unit="mg/L"
-                min={0}
-                step={0.1}
-              />
-              <InputField
-                label="Hằng số tốc độ Fe²⁺ k_Fe"
-                name="k_Fe"
-                type="number"
-                value={formData.k_Fe}
-                onChange={(value) => handleInputChange("k_Fe", value)}
-                unit="L/mg·s"
-                min={0.01}
-                step={0.01}
-              />
-              <InputField
-                label="Hằng số tốc độ H₂S k_H2S"
-                name="k_H2S"
-                type="number"
-                value={formData.k_H2S}
-                onChange={(value) => handleInputChange("k_H2S", value)}
-                unit="L/mg·s"
-                min={0.01}
-                step={0.01}
-              />
-              <InputField
-                label="Nồng độ oxy O₂"
-                name="O2"
-                type="number"
-                value={formData.O2}
-                onChange={(value) => handleInputChange("O2", value)}
-                unit="mg/L"
-                required
-                min={0.1}
-                step={0.1}
-              />
-              <InputField
-                label="Tỷ lệ kích thước"
-                name="ty_le_kich_thuoc"
-                type="text"
-                value={formData.ty_le_kich_thuoc}
-                onChange={(value) => handleInputChange("ty_le_kich_thuoc", value)}
-                unit=""
-                required
-              />
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading ? "Đang tính toán..." : "Tính toán"}
-              </button>
-            </form>
-
-            {error && (
-              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
-                <p className="text-red-800 text-sm">{error}</p>
-              </div>
-            )}
-          </div>
-
-          <div className="lg:col-span-1">
-            {result && <ResultsDisplay result={result} />}
-            {!result && !loading && (
-              <div className="bg-white rounded-lg shadow-lg p-6 text-center text-gray-500">
-                <p>Nhập thông số và nhấn "Tính toán" để xem kết quả</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }
-

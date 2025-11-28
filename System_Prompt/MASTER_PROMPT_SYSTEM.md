@@ -1,0 +1,1 @@
+# Prompt nạp vào AI + Rules enforcement

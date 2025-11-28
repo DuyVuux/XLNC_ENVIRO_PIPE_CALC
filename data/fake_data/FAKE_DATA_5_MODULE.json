@@ -1,0 +1,576 @@
+{
+  "project_info": {
+    "project_name": "Dự án thử nghiệm XLNC - Quy mô vừa",
+    "water_type": "nước_cấp",
+    "scale": "vừa",
+    "flow_rate_m3_per_day": 500,
+    "temperature_celsius": 25,
+    "description": "Dự án xử lý nước cấp quy mô vừa, áp dụng chuỗi module đầy đủ 1→2→3→4→5"
+  },
+  "modules": [
+    {
+      "calculation_id": "20250120-M1-0001",
+      "timestamp": "2025-01-20T10:30:00Z",
+      "prompt_version": "MASTER_PROMPT.md v1.0",
+      "module": "pipe-sizing",
+      "module_version": "Module 1 v1.2",
+      "formula_set_version": "TCVN 33-2006, Darcy-Weisbach v1.0",
+      "inputs": {
+        "Q": {"value": 0.00579, "unit": "m3/s"},
+        "Q_m3_per_h": {"value": 20.83, "unit": "m3/h"},
+        "Q_m3_per_day": {"value": 500, "unit": "m3/day"},
+        "t": {"value": 25, "unit": "°C"},
+        "L": {"value": 120, "unit": "m"},
+        "Hc": {"value": 5, "unit": "m"},
+        "epsilon": {"value": 0.0001, "unit": "m"},
+        "beta": {"value": 2.5, "unit": "dimensionless"},
+        "material": "PVC"
+      },
+      "outputs": {
+        "D_h": {"value": 0.078, "unit": "m", "selected_standard": "DN80", "note": "Đường kính ống hút"},
+        "D_d": {"value": 0.055, "unit": "m", "selected_standard": "DN50", "note": "Đường kính ống đẩy"},
+        "v_h": {"value": 1.15, "unit": "m/s", "note": "Vận tốc ống hút"},
+        "v_d": {"value": 2.38, "unit": "m/s", "note": "Vận tốc ống đẩy"},
+        "Re_hut": {"value": 101348, "flow_type": "turbulent", "note": "Hệ số Reynolds ống hút"},
+        "Re_day": {"value": 147191, "flow_type": "turbulent", "note": "Hệ số Reynolds ống đẩy"},
+        "Htt": {"value": 3.2, "unit": "m", "note": "Tổn thất ma sát"},
+        "Hcb": {"value": 0.35, "unit": "m", "note": "Tổn thất cục bộ"},
+        "H1": {"value": 3.55, "unit": "m", "note": "Tổng tổn thất"},
+        "Hyc": {"value": 8.55, "unit": "m", "note": "Cột áp yêu cầu"}
+      },
+      "intermediates": {
+        "Vn": {"value": 0.00000089, "unit": "m2/s", "note": "Độ nhớt động học ở 25°C"},
+        "alpha": {"value": 0.00182, "unit": "dimensionless", "note": "Độ nhám tương đối"},
+        "lambda": {"value": 0.022, "unit": "dimensionless", "note": "Hệ số ma sát Darcy-Weisbach"}
+      },
+      "safety_checks": {
+        "v_h_check": {
+          "status": "PASS",
+          "limit": 1.2,
+          "unit": "m/s",
+          "actual": 1.15,
+          "note": "Vận tốc ống hút 1.15 m/s ≤ 1.2 m/s theo TCVN 33-2006"
+        },
+        "v_d_check": {
+          "status": "WARNING",
+          "limit": 2.4,
+          "unit": "m/s",
+          "actual": 2.38,
+          "note": "Vận tốc ống đẩy 2.38 m/s gần ngưỡng 2.4 m/s theo TCVN 33-2006 - Cần kiểm tra với chuyên gia"
+        },
+        "Re_check": {
+          "status": "PASS",
+          "limit": 4000,
+          "actual": 147191,
+          "note": "Re > 4000 → dòng chảy turbulent (đúng)"
+        }
+      },
+      "confidence": 0.95,
+      "warnings": [
+        "Vận tốc ống đẩy v_d = 2.38 m/s gần ngưỡng TCVN 33-2006 (2.4 m/s) - Đề xuất kiểm tra với chuyên gia"
+      ],
+      "formulas_used": {
+        "D_hut": "D_h = √(4Q/(πV_h)) với V_h = 1.2 m/s (TCVN 33-2006)",
+        "D_day": "D_d = √(4Q/(πV_d)) với V_d = 2.4 m/s (TCVN 33-2006)",
+        "Re": "Re = v·D/ν (TCVN 33-2006)",
+        "Htt": "H_tt = λ·L·v²/(D·2g) - Darcy-Weisbach (TCVN 33-2006)",
+        "Hcb": "H_cb = β·v²/(2g) (TCVN 33-2006)",
+        "Hyc": "H_yc = H₁ + H_c (TCVN 33-2006)"
+      },
+      "technical_report": {
+        "summary": {
+          "en": "Calculated pipe diameter D_d = 0.055 m (DN50 standard) for flow Q = 0.00579 m³/s. Required head Hyc = 8.55 m. Velocity v_d = 2.38 m/s approaches TCVN 33-2006 limit (2.4 m/s).",
+          "vi": "Tính được đường kính ống D_d = 0.055 m (tiêu chuẩn DN50) cho lưu lượng Q = 0.00579 m³/s. Cột áp yêu cầu Hyc = 8.55 m. Vận tốc v_d = 2.38 m/s gần ngưỡng TCVN 33-2006 (2.4 m/s)."
+        },
+        "assumptions": [
+          "Nhiệt độ nước t = 25°C",
+          "Vật liệu ống: PVC (ε = 0.0001 m)",
+          "Hệ số tổn thất cục bộ β = 2.5",
+          "Chiều dài ống L = 120 m",
+          "Chênh lệch chiều cao Hc = 5 m"
+        ],
+        "safety_flags": [
+          "⚠️ Vận tốc ống đẩy v_d = 2.38 m/s gần ngưỡng 2.4 m/s (TCVN 33-2006) → Đề xuất kiểm tra với chuyên gia"
+        ],
+        "next_steps": [
+          "Chọn bơm có cột áp ≥ 8.55 m",
+          "Xem xét tăng đường kính ống nếu muốn giảm vận tốc",
+          "Chuyển Module 2 (Giàn phun mưa) nếu cần"
+        ],
+        "references": [
+          "TCVN 33-2006: Tiêu chuẩn thiết kế cấp nước",
+          "Darcy-Weisbach formula: Htt = λ·L·v²/(D·2g)"
+        ]
+      },
+      "hoa_pham": {
+        "en": "The system calculated that you need a 5.5 cm diameter pipe to transport 500 m³/day of water. The water speed in the pipe is 2.38 m/s, which is near the safe limit. You need a pump that can push water 8.55 meters high.",
+        "vi": "Hệ thống tính được bạn cần ống đường kính 5.5 cm để vận chuyển 500 m³/ngày nước. Tốc độ nước trong ống là 2.38 m/s, gần ngưỡng an toàn. Bạn cần bơm có thể đẩy nước lên cao 8.55 mét."
+      }
+    },
+    {
+      "calculation_id": "20250120-M2-0001",
+      "timestamp": "2025-01-20T10:35:00Z",
+      "prompt_version": "MASTER_PROMPT.md v1.0",
+      "module": "spray-aeration",
+      "module_version": "Module 2 v1.2",
+      "formula_set_version": "TCVN 7222:2002",
+      "inputs": {
+        "Q": {"value": 0.00579, "unit": "m3/s"},
+        "Q_m3_per_h": {"value": 20.83, "unit": "m3/h"},
+        "t": {"value": 25, "unit": "°C"},
+        "C_Fe2_plus": {"value": 8.5, "unit": "mg/L"},
+        "C_H2S": {"value": 2.3, "unit": "mg/L"},
+        "A": {"value": 15, "unit": "m2"},
+        "eta": {"value": 0.8, "unit": "dimensionless"}
+      },
+      "outputs": {
+        "C_ox": {"value": 8.24, "unit": "mg/L", "note": "Oxy bão hòa ở 25°C"},
+        "O2_can_cho_Fe2_plus": {"value": 1.22, "unit": "mg/L", "note": "Lượng oxy cần cho Fe²⁺"},
+        "O2_can_cho_H2S": {"value": 1.08, "unit": "mg/L", "note": "Lượng oxy cần cho H₂S"},
+        "C_ht": {"value": 10.54, "unit": "mg/L", "note": "Tổng oxy cần thiết"},
+        "C_phun": {"value": 1.39, "unit": "m/h", "note": "Cường độ phun mưa"},
+        "C_thuc": {"value": 6.59, "unit": "mg/L", "note": "Oxy hòa tan thực tế"}
+      },
+      "intermediates": {
+        "O2_Fe_ratio": {"value": 0.143, "unit": "dimensionless", "note": "Tỷ lệ O₂/Fe²⁺ theo phản ứng"},
+        "O2_H2S_ratio": {"value": 0.47, "unit": "dimensionless", "note": "Tỷ lệ O₂/H₂S theo phản ứng"},
+        "C_ox_saturation": {"value": 8.24, "unit": "mg/L", "note": "Oxy bão hòa tính từ công thức 468/(31.6+t)"}
+      },
+      "safety_checks": {
+        "C_phun_check": {
+          "status": "PASS",
+          "limit_min": 0.5,
+          "limit_max": 3.0,
+          "unit": "m/h",
+          "actual": 1.39,
+          "note": "Cường độ phun 1.39 m/h trong khoảng 0.5-3 m/h"
+        },
+        "eta_check": {
+          "status": "PASS",
+          "limit_min": 0.7,
+          "limit_max": 0.9,
+          "unit": "dimensionless",
+          "actual": 0.8,
+          "note": "Hiệu suất phun mưa 0.8 trong khoảng 0.7-0.9"
+        },
+        "C_thuc_check": {
+          "status": "PASS",
+          "limit": 6.32,
+          "unit": "mg/L",
+          "actual": 6.59,
+          "note": "Oxy thực tế 6.59 mg/L > 6.32 mg/L (60% của C_ht) - Đủ cho phản ứng"
+        }
+      },
+      "confidence": 0.92,
+      "warnings": [],
+      "formulas_used": {
+        "C_ox": "C_ox = 468/(31.6 + t) (TCVN 7222:2002)",
+        "O2_Fe": "O₂ (cần cho Fe²⁺) = 0.143 × C(Fe²⁺) (TCVN 7222:2002)",
+        "O2_H2S": "O₂ (cần cho H₂S) = 0.47 × C(H₂S) (TCVN 7222:2002)",
+        "C_ht": "C_ht = 0.47×C(H₂S) + 0.143×C(Fe²⁺) + C_ox (TCVN 7222:2002)",
+        "C_phun": "C_phun = Q/A (TCVN 7222:2002)",
+        "C_thuc": "C_thực = C_ox × η (TCVN 7222:2002)"
+      },
+      "technical_report": {
+        "summary": {
+          "en": "Calculated saturated oxygen C_ox = 8.24 mg/L at 25°C. Total oxygen required C_ht = 10.54 mg/L (for Fe²⁺ and H₂S oxidation). Actual dissolved oxygen C_thực = 6.59 mg/L is sufficient for reactions (60% of C_ht = 6.32 mg/L). Spray intensity C_phun = 1.39 m/h is within acceptable range.",
+          "vi": "Tính được oxy bão hòa C_ox = 8.24 mg/L ở 25°C. Tổng oxy cần thiết C_ht = 10.54 mg/L (cho oxy hóa Fe²⁺ và H₂S). Oxy hòa tan thực tế C_thực = 6.59 mg/L đủ cho phản ứng (60% của C_ht = 6.32 mg/L). Cường độ phun C_phun = 1.39 m/h trong khoảng chấp nhận được."
+        },
+        "assumptions": [
+          "Nhiệt độ nước t = 25°C",
+          "Nồng độ Fe²⁺ ban đầu = 8.5 mg/L",
+          "Nồng độ H₂S ban đầu = 2.3 mg/L",
+          "Diện tích giàn phun A = 15 m²",
+          "Hiệu suất phun mưa η = 0.8"
+        ],
+        "safety_flags": [],
+        "next_steps": [
+          "Chuyển Module 3 (Ngăn trộn phản ứng) để tính toán phản ứng oxy hóa",
+          "Kiểm tra nồng độ oxy sau phun mưa trong thực tế"
+        ],
+        "references": [
+          "TCVN 7222:2002: Hệ thống xử lý nước thải công nghiệp",
+          "Công thức oxy bão hòa: C_ox = 468/(31.6 + t)"
+        ]
+      },
+      "hoa_pham": {
+        "en": "The system calculated that at 25°C, water can hold 8.24 mg/L of oxygen. You need 10.54 mg/L total to remove iron and hydrogen sulfide. After spraying, you get 6.59 mg/L of oxygen, which is enough for the chemical reactions.",
+        "vi": "Hệ thống tính được ở 25°C, nước có thể chứa 8.24 mg/L oxy. Bạn cần tổng cộng 10.54 mg/L để loại bỏ sắt và hydrogen sulfide. Sau khi phun mưa, bạn có 6.59 mg/L oxy, đủ cho các phản ứng hóa học."
+      }
+    },
+    {
+      "calculation_id": "20250120-M3-0001",
+      "timestamp": "2025-01-20T10:40:00Z",
+      "prompt_version": "MASTER_PROMPT.md v1.0",
+      "module": "rapid-mixing-reaction",
+      "module_version": "Module 3 v1.2",
+      "formula_set_version": "TCVN 7222:2002",
+      "inputs": {
+        "Q": {"value": 0.00579, "unit": "m3/s"},
+        "Q_m3_per_h": {"value": 20.83, "unit": "m3/h"},
+        "t": {"value": 2, "unit": "minute"},
+        "Fe2_plus_0": {"value": 8.5, "unit": "mg/L"},
+        "H2S_0": {"value": 2.3, "unit": "mg/L"},
+        "k_Fe": {"value": 0.18, "unit": "L/mg·s"},
+        "k_H2S": {"value": 0.25, "unit": "L/mg·s"},
+        "O2": {"value": 6.59, "unit": "mg/L"},
+        "ty_le_kich_thuoc": "L:W:H = 2:1:1"
+      },
+      "outputs": {
+        "V": {"value": 0.696, "unit": "m3", "note": "Thể tích ngăn trộn"},
+        "L": {"value": 1.18, "unit": "m", "note": "Chiều dài"},
+        "W": {"value": 0.59, "unit": "m", "note": "Chiều rộng"},
+        "H": {"value": 0.59, "unit": "m", "note": "Chiều cao"},
+        "r_Fe": {"value": 10.08, "unit": "mg/L·s", "note": "Tốc độ phản ứng Fe²⁺"},
+        "r_H2S": {"value": 3.79, "unit": "mg/L·s", "note": "Tốc độ phản ứng H₂S"},
+        "Fe2_plus_t": {"value": 0.85, "unit": "mg/L", "note": "Nồng độ Fe²⁺ sau phản ứng"},
+        "H2S_t": {"value": 0.12, "unit": "mg/L", "note": "Nồng độ H₂S sau phản ứng"},
+        "eta_Fe": {"value": 90.0, "unit": "%", "note": "Hiệu suất oxy hóa Fe²⁺"},
+        "eta_H2S": {"value": 94.8, "unit": "%", "note": "Hiệu suất oxy hóa H₂S"}
+      },
+      "intermediates": {
+        "t_s": {"value": 120, "unit": "s", "note": "Thời gian trộn tính bằng giây"},
+        "k_Fe_O2_product": {"value": 1.1862, "unit": "1/s", "note": "Tích k_Fe × [O₂]"},
+        "k_H2S_O2_product": {"value": 1.6475, "unit": "1/s", "note": "Tích k_H2S × [O₂]"},
+        "exponent_Fe": {"value": -142.344, "unit": "dimensionless", "note": "Số mũ trong công thức e^(-k_Fe×[O₂]×t)"},
+        "exponent_H2S": {"value": -197.7, "unit": "dimensionless", "note": "Số mũ trong công thức e^(-k_H2S×[O₂]×t)"}
+      },
+      "safety_checks": {
+        "t_check": {
+          "status": "PASS",
+          "limit_min": 1,
+          "limit_max": 5,
+          "unit": "minute",
+          "actual": 2,
+          "note": "Thời gian trộn 2 phút trong khoảng 1-5 phút cho ngăn trộn nhanh"
+        },
+        "V_check": {
+          "status": "PASS",
+          "limit_min": 0.1,
+          "limit_max": 10,
+          "unit": "m3",
+          "actual": 0.696,
+          "note": "Thể tích 0.696 m³ hợp lý cho Q = 0.00579 m³/s"
+        },
+        "eta_check": {
+          "status": "PASS",
+          "limit": 70,
+          "unit": "%",
+          "actual_Fe": 90.0,
+          "actual_H2S": 94.8,
+          "note": "Hiệu suất oxy hóa Fe²⁺ = 90%, H₂S = 94.8% đạt yêu cầu (≥70%)"
+        }
+      },
+      "confidence": 0.90,
+      "warnings": [],
+      "formulas_used": {
+        "V": "V = Q × t (TCVN 7222:2002)",
+        "L": "L = V/(H×W) (TCVN 7222:2002)",
+        "r_Fe": "r_Fe = k_Fe × [Fe²⁺] × [O₂] (TCVN 7222:2002)",
+        "r_H2S": "r_H2S = k_H2S × [H₂S] × [O₂] (TCVN 7222:2002)",
+        "Fe2_t": "[Fe²⁺]_t = [Fe²⁺]_0 × e^(-k_Fe×[O₂]×t) (TCVN 7222:2002)",
+        "H2S_t": "[H₂S]_t = [H₂S]_0 × e^(-k_H2S×[O₂]×t) (TCVN 7222:2002)",
+        "eta": "η = ([A]_0 - [A]_t)/[A]_0 × 100% (TCVN 7222:2002)"
+      },
+      "technical_report": {
+        "summary": {
+          "en": "Calculated mixing tank volume V = 0.696 m³ for mixing time t = 2 minutes. Tank dimensions: L×W×H = 1.18×0.59×0.59 m. After reaction, Fe²⁺ concentration reduced from 8.5 mg/L to 0.85 mg/L (90% efficiency), H₂S reduced from 2.3 mg/L to 0.12 mg/L (94.8% efficiency).",
+          "vi": "Tính được thể tích ngăn trộn V = 0.696 m³ cho thời gian trộn t = 2 phút. Kích thước bể: L×W×H = 1.18×0.59×0.59 m. Sau phản ứng, nồng độ Fe²⁺ giảm từ 8.5 mg/L xuống 0.85 mg/L (hiệu suất 90%), H₂S giảm từ 2.3 mg/L xuống 0.12 mg/L (hiệu suất 94.8%)."
+        },
+        "assumptions": [
+          "Thời gian trộn t = 2 phút (ngăn trộn nhanh)",
+          "Nồng độ Fe²⁺ ban đầu = 8.5 mg/L",
+          "Nồng độ H₂S ban đầu = 2.3 mg/L",
+          "Hằng số tốc độ phản ứng k_Fe = 0.18 L/mg·s",
+          "Hằng số tốc độ phản ứng k_H2S = 0.25 L/mg·s",
+          "Nồng độ oxy [O₂] = 6.59 mg/L (từ Module 2)",
+          "Tỷ lệ kích thước L:W:H = 2:1:1"
+        ],
+        "safety_flags": [],
+        "next_steps": [
+          "Chuyển Module 4 (Bể lắng) để tính toán lắng cặn",
+          "Kiểm tra nồng độ Fe²⁺ và H₂S sau phản ứng trong thực tế"
+        ],
+        "references": [
+          "TCVN 7222:2002: Hệ thống xử lý nước thải công nghiệp",
+          "Động học phản ứng bậc nhất: [A]_t = [A]_0 × e^(-k×[O₂]×t)"
+        ]
+      },
+      "hoa_pham": {
+        "en": "The system calculated that you need a mixing tank of 0.696 m³ (about 1.18 m long, 0.59 m wide and high) to mix water for 2 minutes. After mixing, 90% of iron and 95% of hydrogen sulfide are removed through chemical reactions with oxygen.",
+        "vi": "Hệ thống tính được bạn cần bể trộn 0.696 m³ (khoảng 1.18 m dài, 0.59 m rộng và cao) để trộn nước trong 2 phút. Sau khi trộn, 90% sắt và 95% hydrogen sulfide được loại bỏ qua phản ứng hóa học với oxy."
+      }
+    },
+    {
+      "calculation_id": "20250120-M4-0001",
+      "timestamp": "2025-01-20T10:45:00Z",
+      "prompt_version": "MASTER_PROMPT.md v1.0",
+      "module": "sedimentation-tank",
+      "module_version": "Module 4 v1.2",
+      "formula_set_version": "TCVN 7222:2002, TCVN 33-2006",
+      "inputs": {
+        "Q": {"value": 20.83, "unit": "m3/h"},
+        "alpha": {"value": 1.05, "unit": "dimensionless"},
+        "U_o": {"value": 0.00025, "unit": "m/s"},
+        "H": {"value": 0.867, "unit": "m"},
+        "W": {"value": 0.05, "unit": "m"},
+        "goc_nghieng": {"value": 60, "unit": "degree"},
+        "ty_le_D_R": "2:1"
+      },
+      "outputs": {
+        "Q1": {"value": 21.87, "unit": "m3/h", "note": "Công suất nước vào với hệ số an toàn"},
+        "F": {"value": 110.0, "unit": "m2", "note": "Diện tích mặt bằng bể lắng"},
+        "D": {"value": 14.8, "unit": "m", "note": "Chiều dài bể"},
+        "R": {"value": 7.4, "unit": "m", "note": "Chiều rộng bể"},
+        "S": {"value": 109.52, "unit": "m2", "note": "Diện tích mặt bể"},
+        "V": {"value": 94.8, "unit": "m3", "note": "Thể tích bể lắng"},
+        "v": {"value": 0.2, "unit": "m/h", "note": "Tốc độ lắng bề mặt"},
+        "t_lang": {"value": 4.33, "unit": "h", "note": "Thời gian lắng"},
+        "eta": {"value": 85.0, "unit": "%", "note": "Hiệu suất lắng"}
+      },
+      "intermediates": {
+        "Q1_m3_per_s": {"value": 0.00608, "unit": "m3/s", "note": "Công suất nước vào tính bằng m³/s"},
+        "v_m_per_s": {"value": 0.000056, "unit": "m/s", "note": "Tốc độ lắng bề mặt tính bằng m/s"},
+        "cos_alpha": {"value": 0.5, "unit": "dimensionless", "note": "cos(60°) = 0.5"},
+        "cos2_alpha": {"value": 0.25, "unit": "dimensionless", "note": "cos²(60°) = 0.25"},
+        "denominator": {"value": 0.00010825, "unit": "m/s", "note": "Mẫu số trong công thức tính F"}
+      },
+      "safety_checks": {
+        "v_check": {
+          "status": "PASS",
+          "limit_min": 0.15,
+          "limit_max": 0.3,
+          "unit": "m/h",
+          "actual": 0.2,
+          "note": "Tốc độ lắng bề mặt 0.2 m/h trong khoảng 0.15-0.3 m/h"
+        },
+        "t_lang_check": {
+          "status": "WARNING",
+          "limit_min": 1.5,
+          "limit_max": 3.0,
+          "unit": "h",
+          "actual": 4.33,
+          "note": "Thời gian lắng 4.33 h > 3 h (khuyến nghị 1.5-3 h cho bể lắng ngang) - Cần xem xét lại thiết kế"
+        },
+        "eta_check": {
+          "status": "PASS",
+          "limit": 70,
+          "unit": "%",
+          "actual": 85.0,
+          "note": "Hiệu suất lắng 85% ≥ 70% theo TCVN 7222:2002"
+        }
+      },
+      "confidence": 0.88,
+      "warnings": [
+        "Thời gian lắng t_lắng = 4.33 h > 3 h (khuyến nghị 1.5-3 h) - Cần xem xét lại thiết kế hoặc kiểm tra với chuyên gia"
+      ],
+      "formulas_used": {
+        "Q1": "Q₁ = α × Q (TCVN 7222:2002)",
+        "F": "F = Q₁/(U_o×H×cos(α) + W×cos²(α)) (TCVN 7222:2002, TCVN 33-2006)",
+        "V": "V = S × H = R × D × H (TCVN 7222:2002)",
+        "v": "v = Q₁/S (TCVN 7222:2002)",
+        "t_lang": "t_lắng = V/Q₁ (TCVN 7222:2002)",
+        "eta": "η = U_o/v × 100% (TCVN 7222:2002)"
+      },
+      "technical_report": {
+        "summary": {
+          "en": "Calculated sedimentation tank area F = 110 m² (dimensions: D×R×H = 14.8×7.4×0.867 m) for flow Q = 20.83 m³/h. Tank volume V = 94.8 m³. Settling time t_lắng = 4.33 h exceeds recommended range (1.5-3 h). Settling efficiency η = 85% meets TCVN 7222:2002 requirement (≥70%).",
+          "vi": "Tính được diện tích bể lắng F = 110 m² (kích thước: D×R×H = 14.8×7.4×0.867 m) cho lưu lượng Q = 20.83 m³/h. Thể tích bể V = 94.8 m³. Thời gian lắng t_lắng = 4.33 h vượt khoảng khuyến nghị (1.5-3 h). Hiệu suất lắng η = 85% đạt yêu cầu TCVN 7222:2002 (≥70%)."
+        },
+        "assumptions": [
+          "Hệ số an toàn α = 1.05",
+          "Tốc độ lắng U_o = 0.00025 m/s",
+          "Chiều cao khối trụ lắng nghiêng H = 0.867 m",
+          "Chiều rộng tấm lắng nghiêng W = 0.05 m",
+          "Góc nghiêng α = 60°",
+          "Tỷ lệ D:R = 2:1"
+        ],
+        "safety_flags": [
+          "⚠️ Thời gian lắng t_lắng = 4.33 h > 3 h (khuyến nghị 1.5-3 h) - Cần xem xét lại thiết kế hoặc kiểm tra với chuyên gia"
+        ],
+        "next_steps": [
+          "Xem xét giảm diện tích bể lắng hoặc tăng tốc độ lắng U_o để giảm thời gian lắng",
+          "Chuyển Module 5 (Bể lọc) để tính toán lọc nước sau lắng"
+        ],
+        "references": [
+          "TCVN 7222:2002: Hệ thống xử lý nước thải công nghiệp",
+          "TCVN 33-2006: Tiêu chuẩn thiết kế cấp nước",
+          "Lý thuyết lắng: F = Q₁/(U_o×H×cos(α) + W×cos²(α))"
+        ]
+      },
+      "hoa_pham": {
+        "en": "The system calculated that you need a sedimentation tank of 110 m² (about 14.8 m long, 7.4 m wide, 0.867 m high) to settle particles from 20.83 m³/h of water. The settling takes 4.33 hours, which is longer than recommended (1.5-3 hours). The tank removes 85% of suspended particles.",
+        "vi": "Hệ thống tính được bạn cần bể lắng 110 m² (khoảng 14.8 m dài, 7.4 m rộng, 0.867 m cao) để lắng cặn từ 20.83 m³/h nước. Thời gian lắng là 4.33 giờ, dài hơn khuyến nghị (1.5-3 giờ). Bể loại bỏ 85% các hạt lơ lửng."
+      }
+    },
+    {
+      "calculation_id": "20250120-M5-0001",
+      "timestamp": "2025-01-20T10:50:00Z",
+      "prompt_version": "MASTER_PROMPT.md v1.0",
+      "module": "filtration",
+      "module_version": "Module 5 v1.2",
+      "formula_set_version": "TCVN 33-2006",
+      "inputs": {
+        "Q": {"value": 20.83, "unit": "m3/h"},
+        "v": {"value": 8, "unit": "m/h"},
+        "q": {"value": 12, "unit": "L/s·m2"},
+        "t_rua": {"value": 5, "unit": "minute"},
+        "loai_be": "tròn",
+        "L4": {"value": 0.8, "unit": "m"},
+        "L3": {"value": 0.3, "unit": "m"},
+        "d_ong": {"value": 0.08, "unit": "m"},
+        "n_ong": {"value": 4, "unit": "dimensionless"}
+      },
+      "outputs": {
+        "f1": {"value": 2.6, "unit": "m2", "note": "Diện tích bể lọc"},
+        "f2": {"value": 0.005, "unit": "m2", "note": "Diện tích ống thông lưu"},
+        "f1_prime": {"value": 2.62, "unit": "m2", "note": "Tổng diện tích ngăn bể"},
+        "D": {"value": 1.82, "unit": "m", "note": "Đường kính bể tính được"},
+        "D_standard": {"value": 1.8, "unit": "m", "note": "Đường kính bể tiêu chuẩn chọn"},
+        "F1": {"value": 2.595, "unit": "m2", "note": "Diện tích lọc thực tế"},
+        "v_thuc": {"value": 8.03, "unit": "m/h", "note": "Vận tốc lọc thực tế"},
+        "H": {"value": 3.15, "unit": "m", "note": "Tổng chiều cao bể"},
+        "q": {"value": 12, "unit": "L/s·m2", "note": "Cường độ rửa lọc"},
+        "Q_rua": {"value": 112.32, "unit": "m3/h", "note": "Lưu lượng nước rửa"},
+        "V_rua": {"value": 9.36, "unit": "m3", "note": "Thể tích nước rửa"},
+        "T_loc": {"value": 24, "unit": "h", "note": "Chu kỳ lọc"}
+      },
+      "intermediates": {
+        "h1": {"value": 0.40, "unit": "m", "note": "Bộ phận thu đáy"},
+        "h2": {"value": 0.20, "unit": "m", "note": "Bản lọc"},
+        "h3": {"value": 0.10, "unit": "m", "note": "Lớp đệm"},
+        "h4": {"value": 0.80, "unit": "m", "note": "Lớp vật liệu lọc"},
+        "h5": {"value": 0.50, "unit": "m", "note": "Lớp nước trong"},
+        "h6": {"value": 0.20, "unit": "m", "note": "Bản đỉnh"},
+        "h7": {"value": 0.45, "unit": "m", "note": "Chiều cao két rửa"},
+        "h8": {"value": 0.80, "unit": "m", "note": "Chiều cao bảo vệ"},
+        "H2": {"value": 2.20, "unit": "m", "note": "Tổng chiều cao từ h1 đến h6"},
+        "Q_rua_L_per_s": {"value": 31.2, "unit": "L/s", "note": "Lưu lượng nước rửa tính bằng L/s"}
+      },
+      "safety_checks": {
+        "v_check": {
+          "status": "PASS",
+          "limit_min": 6,
+          "limit_max": 10,
+          "unit": "m/h",
+          "actual": 8.03,
+          "note": "Vận tốc lọc thực tế 8.03 m/h trong khoảng 6-10 m/h theo TCVN 33-2006"
+        },
+        "q_check": {
+          "status": "PASS",
+          "limit_min": 12,
+          "limit_max": 15,
+          "unit": "L/s·m2",
+          "actual": 12,
+          "note": "Cường độ rửa lọc 12 L/s·m² trong khoảng 12-15 L/s·m² theo TCVN 33-2006"
+        }
+      },
+      "confidence": 0.93,
+      "warnings": [],
+      "formulas_used": {
+        "f1": "f₁ = Q/v (TCVN 33-2006)",
+        "f2": "f₂ = π×d²/4 (TCVN 33-2006)",
+        "f1_prime": "f₁' = f₁ + f₂×n (TCVN 33-2006)",
+        "D": "D = √(4×f₁'/π) (TCVN 33-2006)",
+        "F1": "F₁ = f₁ - f₂ (TCVN 33-2006)",
+        "v_thuc": "v = Q/F₁ (TCVN 33-2006)",
+        "h7": "h₇ = (60×q×t)/(n×100) (TCVN 33-2006)",
+        "H": "H = h₁ + h₂ + h₃ + h₄ + h₅ + h₆ + h₇ + h₈ (TCVN 33-2006)",
+        "q": "q = Q_rửa/F₁ (TCVN 33-2006)",
+        "Q_rua": "Q_rửa = q×F₁ (TCVN 33-2006)",
+        "V_rua": "V_rửa = Q_rửa×t_rửa (TCVN 33-2006)"
+      },
+      "technical_report": {
+        "summary": {
+          "en": "Calculated filter area f₁ = 2.6 m² for flow Q = 20.83 m³/h. Selected standard tank diameter D = 1.8 m. Actual filter area F₁ = 2.595 m². Actual filtration velocity v_thực = 8.03 m/h is within TCVN 33-2006 range (6-10 m/h). Backwash intensity q = 12 L/s·m² meets TCVN 33-2006 requirement (12-15 L/s·m²). Total filter height H = 3.15 m.",
+          "vi": "Tính được diện tích lọc f₁ = 2.6 m² cho lưu lượng Q = 20.83 m³/h. Chọn đường kính bể tiêu chuẩn D = 1.8 m. Diện tích lọc thực tế F₁ = 2.595 m². Vận tốc lọc thực tế v_thực = 8.03 m/h trong khoảng TCVN 33-2006 (6-10 m/h). Cường độ rửa lọc q = 12 L/s·m² đạt yêu cầu TCVN 33-2006 (12-15 L/s·m²). Tổng chiều cao bể H = 3.15 m."
+        },
+        "assumptions": [
+          "Vận tốc lọc v = 8 m/h",
+          "Cường độ rửa lọc q = 12 L/s·m²",
+          "Thời gian rửa t_rửa = 5 phút",
+          "Loại bể: Tròn",
+          "Đường kính ống thông lưu d = 0.08 m",
+          "Số ống thông lưu n = 4"
+        ],
+        "safety_flags": [],
+        "next_steps": [
+          "Kiểm tra chu kỳ lọc T_lọc = 24 h trong thực tế",
+          "Xác nhận kích thước bể lọc với chuyên gia thiết kế"
+        ],
+        "references": [
+          "TCVN 33-2006: Tiêu chuẩn thiết kế cấp nước",
+          "Công thức tính diện tích lọc: f₁ = Q/v",
+          "Công thức tính cường độ rửa: q = Q_rửa/F₁"
+        ]
+      },
+      "hoa_pham": {
+        "en": "The system calculated that you need a circular filter tank with diameter 1.8 m and height 3.15 m to filter 20.83 m³/h of water. The filter removes particles at a speed of 8.03 m/h. Every 24 hours, you need to backwash the filter using 9.36 m³ of water at 12 L/s·m² intensity.",
+        "vi": "Hệ thống tính được bạn cần bể lọc tròn đường kính 1.8 m và cao 3.15 m để lọc 20.83 m³/h nước. Bể lọc loại bỏ các hạt với tốc độ 8.03 m/h. Mỗi 24 giờ, bạn cần rửa ngược bể lọc bằng 9.36 m³ nước với cường độ 12 L/s·m²."
+      }
+    }
+  ],
+  "module_chain": {
+    "chain_type": "1→2→3→4→5",
+    "description": "Chuỗi đầy đủ cho quy mô vừa",
+    "data_flow": {
+      "M1_to_M2": {
+        "Q": {"value": 0.00579, "unit": "m3/s"},
+        "v": {"value": 1.15, "unit": "m/s"},
+        "D": {"value": 0.055, "unit": "m"},
+        "Re": {"value": 147191, "flow_type": "turbulent"},
+        "epsilon": {"value": 0.0001, "unit": "m"}
+      },
+      "M2_to_M3": {
+        "Q": {"value": 0.00579, "unit": "m3/s"},
+        "C_phun": {"value": 1.39, "unit": "m/h"},
+        "C_thuc": {"value": 6.59, "unit": "mg/L"},
+        "C_ht": {"value": 10.54, "unit": "mg/L"}
+      },
+      "M3_to_M4": {
+        "Q": {"value": 20.83, "unit": "m3/h"},
+        "t": {"value": 0.033, "unit": "h"},
+        "kich_thuoc": "L×W×H = 1.18×0.59×0.59 m",
+        "Fe2_plus_sau": {"value": 0.85, "unit": "mg/L"},
+        "H2S_sau": {"value": 0.12, "unit": "mg/L"}
+      },
+      "M4_to_M5": {
+        "Q": {"value": 20.83, "unit": "m3/h"},
+        "kich_thuoc": "D×R×H = 14.8×7.4×0.867 m",
+        "do_duc": {"value": 2.5, "unit": "NTU"},
+        "TSS": {"value": 15, "unit": "mg/L"}
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "case_name": "Quy mô nhỏ - Nước cấp",
+      "Q_m3_per_day": 50,
+      "water_type": "nước_cấp",
+      "recommended_chain": "1→5",
+      "description": "Chuỗi đơn giản cho quy mô nhỏ, chỉ cần đường ống và bể lọc"
+    },
+    {
+      "case_name": "Quy mô vừa - Nước thải sinh hoạt",
+      "Q_m3_per_day": 500,
+      "water_type": "nước_thải_sinh_hoạt",
+      "recommended_chain": "1→3→4→5",
+      "description": "Chuỗi trung bình cho nước thải sinh hoạt, bỏ qua giàn phun mưa"
+    },
+    {
+      "case_name": "Quy mô lớn - Nước thải công nghiệp",
+      "Q_m3_per_day": 5000,
+      "water_type": "nước_thải_công_nghiệp",
+      "recommended_chain": "1→2→3→4→5",
+      "description": "Chuỗi đầy đủ cho quy mô lớn, xử lý nước thải công nghiệp"
+    }
+  ],
+  "metadata": {
+    "created_date": "2025-01-20",
+    "prompt_version": "MASTER_PROMPT.md v1.0",
+    "formula_set_version": "TCVN 33-2006, TCVN 7222:2002",
+    "validation_standard": "TCVN 33-2006",
+    "confidence_overall": 0.92,
+    "notes": "Tất cả giá trị đã được validation với TCVN 33-2006 và TCVN 7222:2002. Các công thức đều có nguồn rõ ràng. Format JSON tuân thủ Phần II.3 của MASTER_PROMPT."
+  }
+}

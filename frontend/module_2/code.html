@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spray Aeration Calculator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#005bbd",
+            "background-light": "#f5f7f8",
+            "background-dark": "#0f1923",
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#1a1a1a] dark:text-gray-200">
+<div class="relative flex min-h-screen w-full">
+<aside class="flex w-full max-w-[280px] flex-col border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1a232e] p-4">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Abstract company logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWY9TtXUC-aZBd5vAQ4v62UjdL-vguZG8pZ8igS7E2VUbDfHnOKn95uyg75Bf8V3ck6NiBbNAwXsPNRJWzNPdwIgaNGz_-xaaYxC7_ExOCNLH_oznGzKiXjjAj0CdBq1qGdYxPu_swaAy8Coji9lJXrUUJI4M9jFdokRRt8nbAz2HVXwH76yHUUWXzylBJw1HzSdfaUyrGg9-rxQkAHHml0bY8mfZvtyrRu0TGKR8k7ovy52kmSzHYdkodHLyupw8FprrX4F4YOQvm");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#1a1a1a] dark:text-white text-base font-medium leading-normal">Water Treatment Suite</h1>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Technical Calculators</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-[#666] dark:text-gray-400">water_drop</span>
+<p class="text-[#1a1a1a] dark:text-gray-300 text-sm font-medium leading-normal">Pipeline Hydraulics</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10" href="#">
+<span class="material-symbols-outlined text-primary">scatter_plot</span>
+<p class="text-primary text-sm font-medium leading-normal">Spray Aeration</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-[#666] dark:text-gray-400">science</span>
+<p class="text-[#1a1a1a] dark:text-gray-300 text-sm font-medium leading-normal">Mixing Reaction</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-[#666] dark:text-gray-400">layers</span>
+<p class="text-[#1a1a1a] dark:text-gray-300 text-sm font-medium leading-normal">Settling Tank</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-[#666] dark:text-gray-400">tune</span>
+<p class="text-[#1a1a1a] dark:text-gray-300 text-sm font-medium leading-normal">Filtration</p>
+</a>
+</nav>
+</div>
+</aside>
+<main class="flex-1 p-6 lg:p-10">
+<div class="w-full max-w-4xl mx-auto">
+<header class="flex flex-col gap-3 mb-8">
+<h1 class="text-[#1a1a1a] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Module 2: Spray Aeration Calculator</h1>
+<p class="text-[#666] dark:text-gray-400 text-base font-normal leading-normal max-w-3xl">
+            Calculate key parameters for spray aeration systems. This tool helps in designing and evaluating the efficiency of spray aeration processes for water treatment.
+          </p>
+</header>
+<div class="bg-white dark:bg-[#1a232e] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 mb-8">
+<h2 class="text-[#1a1a1a] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] mb-6">Input Parameters</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
+<label class="flex flex-col">
+<p class="text-[#666] dark:text-gray-400 text-sm font-medium leading-normal pb-2">Flow rate Q <span class="text-red-500">*</span></p>
+<input class="form-input w-full rounded-lg text-[#1a1a1a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark h-12 placeholder:text-gray-400 dark:placeholder-gray-500 px-4 text-base font-normal leading-normal" placeholder="Enter flow rate" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-[#666] dark:text-gray-400 text-sm font-medium leading-normal pb-2">Flow rate unit <span class="text-red-500">*</span></p>
+<select class="form-select w-full rounded-lg text-[#1a1a1a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal leading-normal">
+<option>m³/s</option>
+<option>m³/h</option>
+<option>m³/ngày</option>
+</select>
+</label>
+<label class="flex flex-col">
+<p class="text-[#666] dark:text-gray-400 text-sm font-medium leading-normal pb-2">Water temperature t (°C)</p>
+<input class="form-input w-full rounded-lg text-[#1a1a1a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark h-12 placeholder:text-gray-400 dark:placeholder-gray-500 px-4 text-base font-normal leading-normal" placeholder="e.g., 25" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-[#666] dark:text-gray-400 text-sm font-medium leading-normal pb-2">Initial Fe²⁺ concentration (mg/L)</p>
+<input class="form-input w-full rounded-lg text-[#1a1a1a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark h-12 placeholder:text-gray-400 dark:placeholder-gray-500 px-4 text-base font-normal leading-normal" placeholder="e.g., 10" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-[#666] dark:text-gray-400 text-sm font-medium leading-normal pb-2">Initial H₂S concentration (mg/L)</p>
+<input class="form-input w-full rounded-lg text-[#1a1a1a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark h-12 placeholder:text-gray-400 dark:placeholder-gray-500 px-4 text-base font-normal leading-normal" placeholder="e.g., 5" type="number" value=""/>
+</label>
+<label class="flex flex-col">
+<p class="text-[#666] dark:text-gray-400 text-sm font-medium leading-normal pb-2">Spray area A (m²) <span class="text-red-500">*</span></p>
+<input class="form-input w-full rounded-lg text-[#1a1a1a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark h-12 placeholder:text-gray-400 dark:placeholder-gray-500 px-4 text-base font-normal leading-normal" placeholder="Enter spray area" type="number" value=""/>
+</label>
+<div class="col-span-1 md:col-span-2">
+<label class="flex flex-col">
+<p class="text-[#666] dark:text-gray-400 text-sm font-medium leading-normal pb-2">Spray efficiency η</p>
+<input class="form-input w-full rounded-lg text-[#1a1a1a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark h-12 placeholder:text-gray-400 dark:placeholder-gray-500 px-4 text-base font-normal leading-normal" max="1" min="0" placeholder="Enter a value between 0 and 1" step="0.01" type="number" value=""/>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">Must be a numeric value between 0 and 1.</p>
+</label>
+</div>
+</div>
+<div class="mt-8">
+<button class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-lg w-full md:w-auto transition-colors">
+              Tính toán
+            </button>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a232e] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 mb-8">
+<h2 class="text-[#1a1a1a] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] mb-6">Calculation Results</h2>
+<div class="min-h-[200px] flex items-center justify-center bg-background-light dark:bg-background-dark rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700">
+<p class="text-gray-500 dark:text-gray-400 text-center">Results will be displayed here after calculation.</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a232e] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-[#1a1a1a] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Equations</h2>
+<button class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col gap-8 justify-center">
+<div class="text-lg font-mono">
+<img alt="Equation for v" class="max-w-full h-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkqrQSUi-QRB8V9Z-sbDU2S122ONyEbztKVOvx_ypvnV5SHwllDoENbV3dxnIyczlUeMM6FOHQdVIyMF7cNBr1vQ_8wrb2skf4qx4XY1Pb6XOMoTwtxUadm8bYWnhFmY_G6F1-xvpRWrZfFfGJIQFy1eTK-tZioSczRDatdyVJvAZl2JHTF5cOGg_hjN0fJh4gV7UpJyMwPvZE1wZXaMGmCmcbzyM7DiLST4caTkavrlvYTmajMCTWWzvEYLVZHXgnAgb-4u0vjBv0"/>
+</div>
+<div class="text-lg font-mono">
+<img alt="Equation for Delta p" class="max-w-full h-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNedhDdFpCZM50F7KFQRXy9_sL9cpKTvocwgZYBiwSJHHuN4qr7IEkDv0ByAvGAVx8KOY8Os0O1QHlV90ge2I4aa7ONbDdS1UXpST-t13Mn1mVOUEAvwtZv7cUpp2qEKWRZviqmKs34OQjVPNgdSTw03ljkjX4UOlHalsfBO573WY1QW1lN7IPnpxHRzcD6qzGSOgqaqBcKMl28zpM_tGqDWG7Kp79XfeLO8oEWXzyEanqvrFt14D9n9x6VqMM-iF8_FtxFbtOpxUK"/>
+</div>
+<div class="text-lg font-mono text-center">ρ: density of water (1000 kg/m³)</div>
+</div>
+<div class="border-t md:border-t-0 md:border-l border-gray-200 dark:border-gray-700 pl-0 md:pl-8 pt-8 md:pt-0">
+<ul class="space-y-3 text-sm text-[#1a1a1a] dark:text-gray-300">
+<li><span class="font-bold">l</span> : Pipe Length (m)</li>
+<li><span class="font-bold">Qw</span> : Water Flow Rate (m³/h)</li>
+<li><span class="font-bold">d</span> : Pipe Inner Diameter (m)</li>
+<li><span class="font-bold">v</span> : Water Velocity (m/s)</li>
+<li><span class="font-bold">Δp</span> : Pressure Loss (Pa)</li>
+<li><span class="font-bold">μ</span> : Coefficient of friction</li>
+<li><span class="font-bold">SG</span> : Specific Gravity</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

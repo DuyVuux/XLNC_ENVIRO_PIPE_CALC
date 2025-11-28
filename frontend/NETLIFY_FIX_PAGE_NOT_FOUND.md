@@ -76,3 +76,8 @@ Nếu vẫn không được, có thể thử export static (nhưng sẽ mất SS
 - Không cần `publish` directory khi dùng plugin
 - Plugin sẽ tự động detect và cài đặt khi detect `netlify.toml` có plugin config
 
+
+
+
+
+

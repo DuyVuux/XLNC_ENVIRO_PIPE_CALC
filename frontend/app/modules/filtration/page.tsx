@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { calculateFiltration } from "@/lib/api";
-import InputField from "@/components/InputField";
-import SelectField from "@/components/SelectField";
-import ResultsDisplay from "@/components/ResultsDisplay";
+import ModuleSidebar from "@/components/modules/ModuleSidebar";
+import FiltrationResultsSection from "@/components/modules/FiltrationResultsSection";
+import EquationsSection from "@/components/modules/EquationsSection";
 
 interface FiltrationInput {
   Q: number;
@@ -64,186 +64,301 @@ export default function FiltrationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Module 5: Bể lọc / Filtration
-          </h1>
-          <p className="text-gray-600">
-            Tính toán diện tích lọc, đường kính bể và chiều cao các lớp theo TCVN 33-2006
-          </p>
+    <div className="relative flex min-h-screen w-full">
+      <ModuleSidebar />
+
+      <main className="flex-1 p-6 lg:p-10">
+        <div className="w-full max-w-4xl mx-auto">
+          <header className="flex flex-col gap-3 mb-8 bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+            <h1 className="text-gray-900 dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
+              Module 5: Filtration Calculator
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 text-lg font-normal leading-normal max-w-3xl">
+              Calculate filter area, tank diameter and layer heights according to TCVN 33-2006
+            </p>
+          </header>
+
+          <main className="space-y-8">
+            <section className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                Input Parameters
+              </h3>
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="flow-rate"
+                  >
+                    Flow rate Q <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="flow-rate"
+                    name="flow-rate"
+                    type="number"
+                    value={formData.Q}
+                    onChange={(e) => handleInputChange("Q", parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    required
+                    min={0.0001}
+                    step={0.0001}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="flow-rate-unit"
+                  >
+                    Flow rate unit <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="flow-rate-unit"
+                    name="flow-rate-unit"
+                    value={formData.Q_unit}
+                    onChange={(e) => handleInputChange("Q_unit", e.target.value)}
+                    required
+                  >
+                    <option value="m3/s">m³/s</option>
+                    <option value="m3/h">m³/h</option>
+                    <option value="m3/day">m³/ngày</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="filtration-velocity"
+                  >
+                    Filtration velocity v (m/h)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="filtration-velocity"
+                    name="filtration-velocity"
+                    type="number"
+                    value={formData.v || 8.0}
+                    onChange={(e) => handleInputChange("v", parseFloat(e.target.value) || 0)}
+                    placeholder="8.0"
+                    min={6}
+                    max={10}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="backwash-intensity"
+                  >
+                    Backwash intensity q (l/s·m²)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="backwash-intensity"
+                    name="backwash-intensity"
+                    type="number"
+                    value={formData.q || 13.5}
+                    onChange={(e) => handleInputChange("q", parseFloat(e.target.value) || 0)}
+                    placeholder="13.5"
+                    min={12}
+                    max={15}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="backwash-time"
+                  >
+                    Backwash time t_rửa (minutes)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="backwash-time"
+                    name="backwash-time"
+                    type="number"
+                    value={formData.t_rua || 5.0}
+                    onChange={(e) => handleInputChange("t_rua", parseFloat(e.target.value) || 0)}
+                    placeholder="5.0"
+                    min={1}
+                    step={0.5}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="number-of-cells"
+                  >
+                    Number of cells n
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="number-of-cells"
+                    name="number-of-cells"
+                    type="number"
+                    value={formData.n || 1}
+                    onChange={(e) => handleInputChange("n", parseInt(e.target.value) || 1)}
+                    placeholder="1"
+                    min={1}
+                    step={1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="h1"
+                  >
+                    h₁ - Bottom collection height (m)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="h1"
+                    name="h1"
+                    type="number"
+                    value={formData.h1 || 0.40}
+                    onChange={(e) => handleInputChange("h1", parseFloat(e.target.value) || 0)}
+                    placeholder="0.40"
+                    min={0.1}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="h2"
+                  >
+                    h₂ - Filter plate height (m)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="h2"
+                    name="h2"
+                    type="number"
+                    value={formData.h2 || 0.20}
+                    onChange={(e) => handleInputChange("h2", parseFloat(e.target.value) || 0)}
+                    placeholder="0.20"
+                    min={0.1}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="h3"
+                  >
+                    h₃ - Support layer height (m)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="h3"
+                    name="h3"
+                    type="number"
+                    value={formData.h3 || 0.10}
+                    onChange={(e) => handleInputChange("h3", parseFloat(e.target.value) || 0)}
+                    placeholder="0.10"
+                    min={0.05}
+                    step={0.05}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="h4"
+                  >
+                    h₄ - Filter media height (m)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="h4"
+                    name="h4"
+                    type="number"
+                    value={formData.h4 || 0.80}
+                    onChange={(e) => handleInputChange("h4", parseFloat(e.target.value) || 0)}
+                    placeholder="0.80"
+                    min={0.5}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="h5"
+                  >
+                    h₅ - Water layer height (m)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="h5"
+                    name="h5"
+                    type="number"
+                    value={formData.h5 || 0.50}
+                    onChange={(e) => handleInputChange("h5", parseFloat(e.target.value) || 0)}
+                    placeholder="0.50"
+                    min={0.3}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="h6"
+                  >
+                    h₆ - Top plate height (m)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="h6"
+                    name="h6"
+                    type="number"
+                    value={formData.h6 || 0.20}
+                    onChange={(e) => handleInputChange("h6", parseFloat(e.target.value) || 0)}
+                    placeholder="0.20"
+                    min={0.1}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="h8"
+                  >
+                    h₈ - Protection height (m)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="h8"
+                    name="h8"
+                    type="number"
+                    value={formData.h8 || 0.80}
+                    onChange={(e) => handleInputChange("h8", parseFloat(e.target.value) || 0)}
+                    placeholder="0.80"
+                    min={0.5}
+                    step={0.1}
+                  />
+                </div>
+                <div className="md:col-span-2 flex justify-center mt-4">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-blue-600 text-white font-bold py-3 px-12 rounded-lg shadow-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-offset-gray-800"
+                  >
+                    {loading ? "Calculating..." : "Calculate"}
+                  </button>
+                </div>
+              </form>
+
+              {error && (
+                <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+                  <p className="text-red-800 dark:text-red-200 text-base">{error}</p>
+                </div>
+              )}
+            </section>
+
+            <FiltrationResultsSection result={result} />
+
+            <EquationsSection />
+          </main>
         </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">Thông số Đầu vào</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <InputField
-                label="Lưu lượng Q"
-                name="Q"
-                type="number"
-                value={formData.Q}
-                onChange={(value) => handleInputChange("Q", value)}
-                unit=""
-                required
-                min={0.0001}
-                step={0.0001}
-              />
-              <SelectField
-                label="Đơn vị lưu lượng"
-                name="Q_unit"
-                value={formData.Q_unit}
-                onChange={(value) => handleInputChange("Q_unit", value)}
-                options={[
-                  { value: "m3/s", label: "m³/s" },
-                  { value: "m3/h", label: "m³/h" },
-                  { value: "m3/day", label: "m³/ngày" },
-                ]}
-                required
-              />
-              <InputField
-                label="Vận tốc lọc v"
-                name="v"
-                type="number"
-                value={formData.v || 8.0}
-                onChange={(value) => handleInputChange("v", value)}
-                unit="m/h"
-                min={6}
-                max={10}
-                step={0.1}
-              />
-              <InputField
-                label="Cường độ rửa lọc q"
-                name="q"
-                type="number"
-                value={formData.q || 13.5}
-                onChange={(value) => handleInputChange("q", value)}
-                unit="l/s·m²"
-                min={12}
-                max={15}
-                step={0.1}
-              />
-              <InputField
-                label="Thời gian rửa t_rửa"
-                name="t_rua"
-                type="number"
-                value={formData.t_rua || 5.0}
-                onChange={(value) => handleInputChange("t_rua", value)}
-                unit="phút"
-                min={1}
-                step={0.5}
-              />
-              <InputField
-                label="Số ngăn bể n"
-                name="n"
-                type="number"
-                value={formData.n || 1}
-                onChange={(value) => handleInputChange("n", value)}
-                unit=""
-                min={1}
-                step={1}
-              />
-              <div className="grid grid-cols-2 gap-4">
-                <InputField
-                  label="h₁ (Bộ phận thu đáy)"
-                  name="h1"
-                  type="number"
-                  value={formData.h1 || 0.40}
-                  onChange={(value) => handleInputChange("h1", value)}
-                  unit="m"
-                  min={0.1}
-                  step={0.1}
-                />
-                <InputField
-                  label="h₂ (Bản lọc)"
-                  name="h2"
-                  type="number"
-                  value={formData.h2 || 0.20}
-                  onChange={(value) => handleInputChange("h2", value)}
-                  unit="m"
-                  min={0.1}
-                  step={0.1}
-                />
-                <InputField
-                  label="h₃ (Lớp đệm)"
-                  name="h3"
-                  type="number"
-                  value={formData.h3 || 0.10}
-                  onChange={(value) => handleInputChange("h3", value)}
-                  unit="m"
-                  min={0.05}
-                  step={0.05}
-                />
-                <InputField
-                  label="h₄ (Vật liệu lọc)"
-                  name="h4"
-                  type="number"
-                  value={formData.h4 || 0.80}
-                  onChange={(value) => handleInputChange("h4", value)}
-                  unit="m"
-                  min={0.5}
-                  step={0.1}
-                />
-                <InputField
-                  label="h₅ (Lớp nước)"
-                  name="h5"
-                  type="number"
-                  value={formData.h5 || 0.50}
-                  onChange={(value) => handleInputChange("h5", value)}
-                  unit="m"
-                  min={0.3}
-                  step={0.1}
-                />
-                <InputField
-                  label="h₆ (Bản đỉnh)"
-                  name="h6"
-                  type="number"
-                  value={formData.h6 || 0.20}
-                  onChange={(value) => handleInputChange("h6", value)}
-                  unit="m"
-                  min={0.1}
-                  step={0.1}
-                />
-                <InputField
-                  label="h₈ (Bảo vệ)"
-                  name="h8"
-                  type="number"
-                  value={formData.h8 || 0.80}
-                  onChange={(value) => handleInputChange("h8", value)}
-                  unit="m"
-                  min={0.5}
-                  step={0.1}
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading ? "Đang tính toán..." : "Tính toán"}
-              </button>
-            </form>
-
-            {error && (
-              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
-                <p className="text-red-800 text-sm">{error}</p>
-              </div>
-            )}
-          </div>
-
-          <div className="lg:col-span-1">
-            {result && <ResultsDisplay result={result} />}
-            {!result && !loading && (
-              <div className="bg-white rounded-lg shadow-lg p-6 text-center text-gray-500">
-                <p>Nhập thông số và nhấn "Tính toán" để xem kết quả</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }
-

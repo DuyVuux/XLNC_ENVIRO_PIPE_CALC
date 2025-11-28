@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { calculateSprayAeration } from "@/lib/api";
-import InputField from "@/components/InputField";
-import SelectField from "@/components/SelectField";
-import ResultsDisplay from "@/components/ResultsDisplay";
+import ModuleSidebar from "@/components/modules/ModuleSidebar";
+import SprayAerationResultsSection from "@/components/modules/SprayAerationResultsSection";
+import EquationsSection from "@/components/modules/EquationsSection";
 
 interface SprayAerationInput {
   Q: number;
@@ -52,125 +52,194 @@ export default function SprayAerationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Module 2: Giàn phun mưa / Spray Aeration
-          </h1>
-          <p className="text-gray-600">
-            Tính toán oxy bão hòa, lượng oxy cần thiết và hiệu suất phun mưa theo TCVN 7222:2002
-          </p>
+    <div className="relative flex min-h-screen w-full">
+      <ModuleSidebar />
+
+      <main className="flex-1 p-6 lg:p-10">
+        <div className="w-full max-w-4xl mx-auto">
+          <header className="flex flex-col gap-3 mb-8 bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+            <h1 className="text-gray-900 dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
+              Module 2: Spray Aeration Calculator
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 text-lg font-normal leading-normal max-w-3xl">
+              Calculate saturated oxygen, required oxygen amount and spray efficiency according to TCVN 7222:2002
+            </p>
+          </header>
+
+          <main className="space-y-8">
+            <section className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                Input Parameters
+              </h3>
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="flow-rate"
+                  >
+                    Flow rate Q <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="flow-rate"
+                    name="flow-rate"
+                    type="number"
+                    value={formData.Q}
+                    onChange={(e) => handleInputChange("Q", parseFloat(e.target.value) || 0)}
+                    placeholder="Enter flow rate"
+                    required
+                    min={0.0001}
+                    step={0.0001}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="flow-rate-unit"
+                  >
+                    Flow rate unit <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="flow-rate-unit"
+                    name="flow-rate-unit"
+                    value={formData.Q_unit}
+                    onChange={(e) => handleInputChange("Q_unit", e.target.value)}
+                    required
+                  >
+                    <option value="m3/s">m³/s</option>
+                    <option value="m3/h">m³/h</option>
+                    <option value="m3/day">m³/ngày</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="water-temp"
+                  >
+                    Water temperature t (°C)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="water-temp"
+                    name="water-temp"
+                    type="number"
+                    value={formData.t}
+                    onChange={(e) => handleInputChange("t", parseFloat(e.target.value) || 0)}
+                    placeholder="e.g., 25"
+                    min={0}
+                    max={100}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="fe2-concentration"
+                  >
+                    Initial Fe²⁺ concentration (mg/L)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="fe2-concentration"
+                    name="fe2-concentration"
+                    type="number"
+                    value={formData.C_Fe2_plus}
+                    onChange={(e) => handleInputChange("C_Fe2_plus", parseFloat(e.target.value) || 0)}
+                    placeholder="e.g., 10"
+                    min={0}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="h2s-concentration"
+                  >
+                    Initial H₂S concentration (mg/L)
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="h2s-concentration"
+                    name="h2s-concentration"
+                    type="number"
+                    value={formData.C_H2S}
+                    onChange={(e) => handleInputChange("C_H2S", parseFloat(e.target.value) || 0)}
+                    placeholder="e.g., 5"
+                    min={0}
+                    step={0.1}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="spray-area"
+                  >
+                    Spray area A (m²) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="spray-area"
+                    name="spray-area"
+                    type="number"
+                    value={formData.A}
+                    onChange={(e) => handleInputChange("A", parseFloat(e.target.value) || 0)}
+                    placeholder="Enter spray area"
+                    required
+                    min={0.1}
+                    step={0.1}
+                  />
+                </div>
+                <div className="col-span-1 md:col-span-2">
+                  <label
+                    className="block text-base font-medium text-gray-600 dark:text-gray-400"
+                    htmlFor="spray-efficiency"
+                  >
+                    Spray efficiency η
+                  </label>
+                  <input
+                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 shadow-sm focus:border-blue-600 focus:ring-blue-600 px-3 py-2 text-lg"
+                    id="spray-efficiency"
+                    name="spray-efficiency"
+                    type="number"
+                    value={formData.eta}
+                    onChange={(e) => handleInputChange("eta", parseFloat(e.target.value) || 0)}
+                    placeholder="Enter a value between 0 and 1"
+                    min={0}
+                    max={1}
+                    step={0.01}
+                  />
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1.5">
+                    Must be a numeric value between 0 and 1.
+                  </p>
+                </div>
+                <div className="md:col-span-2 flex justify-center mt-4">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg w-full md:w-auto transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 dark:focus:ring-offset-gray-800"
+                  >
+                    {loading ? "Calculating..." : "Calculate"}
+                  </button>
+                </div>
+              </form>
+
+              {error && (
+                <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+                  <p className="text-red-800 dark:text-red-200 text-base">{error}</p>
+                </div>
+              )}
+            </section>
+
+            <SprayAerationResultsSection result={result} />
+
+            <EquationsSection />
+          </main>
         </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">Thông số Đầu vào</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <InputField
-                label="Lưu lượng Q"
-                name="Q"
-                type="number"
-                value={formData.Q}
-                onChange={(value) => handleInputChange("Q", value)}
-                unit=""
-                required
-                min={0.0001}
-                step={0.0001}
-              />
-              <SelectField
-                label="Đơn vị lưu lượng"
-                name="Q_unit"
-                value={formData.Q_unit}
-                onChange={(value) => handleInputChange("Q_unit", value)}
-                options={[
-                  { value: "m3/s", label: "m³/s" },
-                  { value: "m3/h", label: "m³/h" },
-                  { value: "m3/day", label: "m³/ngày" },
-                ]}
-                required
-              />
-              <InputField
-                label="Nhiệt độ nước t"
-                name="t"
-                type="number"
-                value={formData.t}
-                onChange={(value) => handleInputChange("t", value)}
-                unit="°C"
-                min={0}
-                max={100}
-                step={0.1}
-              />
-              <InputField
-                label="Nồng độ Fe²⁺ ban đầu"
-                name="C_Fe2_plus"
-                type="number"
-                value={formData.C_Fe2_plus}
-                onChange={(value) => handleInputChange("C_Fe2_plus", value)}
-                unit="mg/L"
-                min={0}
-                step={0.1}
-              />
-              <InputField
-                label="Nồng độ H₂S ban đầu"
-                name="C_H2S"
-                type="number"
-                value={formData.C_H2S}
-                onChange={(value) => handleInputChange("C_H2S", value)}
-                unit="mg/L"
-                min={0}
-                step={0.1}
-              />
-              <InputField
-                label="Diện tích giàn phun A"
-                name="A"
-                type="number"
-                value={formData.A}
-                onChange={(value) => handleInputChange("A", value)}
-                unit="m²"
-                required
-                min={0.1}
-                step={0.1}
-              />
-              <InputField
-                label="Hiệu suất phun mưa η"
-                name="eta"
-                type="number"
-                value={formData.eta}
-                onChange={(value) => handleInputChange("eta", value)}
-                unit=""
-                min={0.7}
-                max={0.9}
-                step={0.01}
-              />
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading ? "Đang tính toán..." : "Tính toán"}
-              </button>
-            </form>
-
-            {error && (
-              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
-                <p className="text-red-800 text-sm">{error}</p>
-              </div>
-            )}
-          </div>
-
-          <div className="lg:col-span-1">
-            {result && <ResultsDisplay result={result} />}
-            {!result && !loading && (
-              <div className="bg-white rounded-lg shadow-lg p-6 text-center text-gray-500">
-                <p>Nhập thông số và nhấn "Tính toán" để xem kết quả</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      </main>
     </div>
   );
 }
+
+
 

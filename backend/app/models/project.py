@@ -54,3 +54,5 @@ class ModuleChain(Base):
     chain_config = Column(JSONB, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+
+
