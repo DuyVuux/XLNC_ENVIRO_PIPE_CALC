@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { calculateFiltration } from "@/lib/api";
 import ModuleSidebar from "@/components/modules/ModuleSidebar";
+import ModuleTopBar from "@/components/modules/ModuleTopBar";
 import FiltrationResultsSection from "@/components/modules/FiltrationResultsSection";
 import EquationsSection from "@/components/modules/EquationsSection";
 
@@ -64,8 +65,10 @@ export default function FiltrationPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full">
-      <ModuleSidebar />
+    <div className="relative flex flex-col min-h-screen w-full">
+      <ModuleTopBar />
+      <div className="relative flex flex-1 w-full">
+        <ModuleSidebar />
 
       <main className="flex-1 p-6 lg:p-10">
         <div className="w-full max-w-4xl mx-auto">
@@ -359,6 +362,7 @@ export default function FiltrationPage() {
           </main>
         </div>
       </main>
+      </div>
     </div>
   );
 }

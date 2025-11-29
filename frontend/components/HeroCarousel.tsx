@@ -91,17 +91,17 @@ export default function HeroCarousel() {
 
       <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-black bg-opacity-30 p-2 rounded-full hover:bg-opacity-50 focus:outline-none"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 z-20 text-white bg-black bg-opacity-50 hover:bg-opacity-70 focus:outline-none transition-all duration-200 p-4 rounded-r-lg"
         aria-label="Previous slide"
       >
-        <span className="material-icons">chevron_left</span>
+        <span className="material-icons text-4xl">chevron_left</span>
       </button>
       <button
         onClick={nextSlide}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-black bg-opacity-30 p-2 rounded-full hover:bg-opacity-50 focus:outline-none"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 z-20 text-white bg-black bg-opacity-50 hover:bg-opacity-70 focus:outline-none transition-all duration-200 p-4 rounded-l-lg"
         aria-label="Next slide"
       >
-        <span className="material-icons">chevron_right</span>
+        <span className="material-icons text-4xl">chevron_right</span>
       </button>
 
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2">
@@ -119,4 +119,3 @@ export default function HeroCarousel() {
     </section>
   );
 }
-

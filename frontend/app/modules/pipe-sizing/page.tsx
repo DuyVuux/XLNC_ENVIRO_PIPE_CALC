@@ -4,6 +4,7 @@ import { useState } from "react";
 import { calculatePipeSizing } from "@/lib/api";
 import { PipeSizingInput, PipeSizingOutput } from "@/types/api";
 import ModuleSidebar from "@/components/modules/ModuleSidebar";
+import ModuleTopBar from "@/components/modules/ModuleTopBar";
 import PipeSizingResultsSection from "@/components/modules/PipeSizingResultsSection";
 import EquationsSection from "@/components/modules/EquationsSection";
 
@@ -44,8 +45,10 @@ export default function PipeSizingPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full">
-      <ModuleSidebar />
+    <div className="relative flex flex-col min-h-screen w-full">
+      <ModuleTopBar />
+      <div className="relative flex flex-1 w-full">
+        <ModuleSidebar />
 
       <main className="flex-1 p-6 lg:p-10">
         <div className="w-full max-w-4xl mx-auto">
@@ -248,6 +251,7 @@ export default function PipeSizingPage() {
           </main>
         </div>
       </main>
+      </div>
     </div>
   );
 }

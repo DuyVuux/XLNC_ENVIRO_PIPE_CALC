@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { calculateMixingReaction } from "@/lib/api";
 import ModuleSidebar from "@/components/modules/ModuleSidebar";
+import ModuleTopBar from "@/components/modules/ModuleTopBar";
 import MixingReactionResultsSection from "@/components/modules/MixingReactionResultsSection";
 import EquationsSection from "@/components/modules/EquationsSection";
 
@@ -58,8 +59,10 @@ export default function MixingReactionPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full">
-      <ModuleSidebar />
+    <div className="relative flex flex-col min-h-screen w-full">
+      <ModuleTopBar />
+      <div className="relative flex flex-1 w-full">
+        <ModuleSidebar />
 
       <main className="flex-1 p-6 lg:p-10">
         <div className="w-full max-w-4xl mx-auto">
@@ -296,6 +299,7 @@ export default function MixingReactionPage() {
           </main>
         </div>
       </main>
+      </div>
     </div>
   );
 }

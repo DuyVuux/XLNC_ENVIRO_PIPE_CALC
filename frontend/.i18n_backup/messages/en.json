@@ -1,0 +1,331 @@
+{
+  "common": {
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "calculate": "Calculate",
+    "calculating": "Calculating...",
+    "required": "Required",
+    "optional": "Optional"
+  },
+  "header": {
+    "search": "Search",
+    "home": "Home",
+    "modules": "Modules",
+    "engineeringTools": "Engineering Tools",
+    "documentation": "Documentation",
+    "industries": "Industries",
+    "contact": "Contact",
+    "language": {
+      "en": "EN",
+      "vi": "VN"
+    }
+  },
+  "footer": {
+    "modules": "Modules",
+    "module1": "Pipe Sizing",
+    "module2": "Spray Aeration",
+    "module3": "Mixing Reaction",
+    "module4": "Settling Tank",
+    "module5": "Filtration",
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "documentation": "Documentation",
+    "api": "API",
+    "community": "Community",
+    "resources": "Resources",
+    "company": "Company",
+    "aboutUs": "About Us",
+    "careers": "Careers",
+    "press": "Press",
+    "privacyPolicy": "Privacy Policy",
+    "contact": "Contact",
+    "copyright": "© 2024 XLNC Engineering System. All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "slide1": {
+        "title": "Automated Water Treatment Engineering",
+        "description": "Accurate sizing for pipelines, tanks, aeration and filtration.",
+        "button": "Start Designing"
+      },
+      "slide2": {
+        "title": "Professional Tools for Environmental Engineers",
+        "description": "Built for water supply, wastewater, and industrial facilities.",
+        "button": "Explore Modules"
+      },
+      "slide3": {
+        "title": "XLNC Engineering Modules",
+        "description": "Pipe sizing, aeration, mixing, settling, filtration.",
+        "button": "View Details"
+      }
+    },
+    "features": {
+      "title": "Key Features",
+      "feature1": {
+        "title": "Accurate Engineering Calculations",
+        "description": "Reliable and precise results based on industry-standard formulas and best practices."
+      },
+      "feature2": {
+        "title": "Supports 5 Water Treatment Modules",
+        "description": "Comprehensive toolkit covering the core components of water treatment system design."
+      },
+      "feature3": {
+        "title": "Automatic Report Generation",
+        "description": "Instantly create professional PDF reports of your calculations and designs."
+      }
+    },
+    "modules": {
+      "title": "XLNC Modules",
+      "subtitle": "Powerful, intuitive modules for every stage of your water treatment engineering project.",
+      "openModule": "Open Module →",
+      "module1": {
+        "title": "Pipe Sizing",
+        "description": "Calculate optimal pipe diameters for various flow rates and materials."
+      },
+      "module2": {
+        "title": "Spray Aeration",
+        "description": "Design effective aeration systems for gas exchange and purification."
+      },
+      "module3": {
+        "title": "Mixing Reaction",
+        "description": "Model and size chemical mixing tanks for efficient reactions."
+      },
+      "module4": {
+        "title": "Settling Tank",
+        "description": "Engineer sedimentation basins for effective solids removal."
+      },
+      "module5": {
+        "title": "Filtration",
+        "description": "Design media filters for removing suspended particles from water."
+      }
+    },
+    "resources": {
+      "title": "Engineering Resources",
+      "subtitle": "Access a suite of tools and data to support your engineering decisions.",
+      "resource1": {
+        "title": "Technical Calculators",
+        "description": "Quick calculations for common engineering tasks."
+      },
+      "resource2": {
+        "title": "Water Quality Standards",
+        "description": "Reference key regulatory water quality parameters."
+      },
+      "resource3": {
+        "title": "Chemical Dosing Guide",
+        "description": "Guidelines for common water treatment chemicals."
+      },
+      "resource4": {
+        "title": "Flow/Velocity Charts",
+        "description": "Handy charts for pipe flow and velocity analysis."
+      }
+    },
+    "whyChoose": {
+      "title": "Why Choose XLNC?",
+      "subtitle": "XLNC provides a robust, user-friendly platform designed by engineers, for engineers. We streamline your workflow so you can focus on what matters most: delivering excellent results.",
+      "benefit1": {
+        "title": "Accuracy You Can Trust",
+        "description": "Our calculations are rigorously tested and validated against established engineering principles."
+      },
+      "benefit2": {
+        "title": "Intuitive & Usable Interface",
+        "description": "A clean, logical interface that reduces learning curves and maximizes productivity."
+      },
+      "benefit3": {
+        "title": "Unwavering Reliability",
+        "description": "Built on a secure and stable platform to ensure your work is always safe and accessible."
+      }
+    },
+    "industries": {
+      "title": "Serving Critical Industries",
+      "industry1": "Water Supply Plants",
+      "industry2": "Industrial Wastewater",
+      "industry3": "Environmental Consulting",
+      "industry4": "EPC Contractors"
+    }
+  },
+  "modules": {
+    "sidebar": {
+      "title": "Water Treatment Suite",
+      "subtitle": "Technical Calculators",
+      "module1": "Pipeline Hydraulics",
+      "module2": "Spray Aeration",
+      "module3": "Mixing Reaction",
+      "module4": "Settling Tank",
+      "module5": "Filtration"
+    },
+    "topBar": {
+      "title": "XLNC"
+    },
+    "module1": {
+      "title": "Module 1: Pipeline Hydraulics Calculator",
+      "description": "Calculate pipe diameters, flow velocities, head losses, and required pump heads according to TCVN 33-2006.",
+      "inputParameters": "Input Parameters",
+      "calculationResults": "Calculation Results",
+      "equations": "Equations and Definitions",
+      "fields": {
+        "flowRate": "Flow rate Q",
+        "flowRateUnit": "Flow rate unit",
+        "pipeLength": "Pipe length L",
+        "heightDifference": "Height difference Hc",
+        "waterTemperature": "Water temperature t",
+        "pipeRoughness": "Pipe roughness ε",
+        "localLossCoefficient": "Local loss coefficient β",
+        "pipeMaterial": "Pipe material"
+      },
+      "units": {
+        "m3s": "m³/s",
+        "m3h": "m³/h",
+        "m3day": "m³/day"
+      },
+      "results": {
+        "requiredDiameterSuction": "Required diameter (Suction) D_h",
+        "requiredDiameterDischarge": "Required diameter (Discharge) D_d",
+        "flowVelocitySuction": "Flow velocity (Suction) v_h",
+        "flowVelocityDischarge": "Flow velocity (Discharge) v_d",
+        "frictionHeadLoss": "Friction head loss Htt",
+        "localHeadLoss": "Local head loss Hcb",
+        "totalHeadLoss": "Total head loss H1",
+        "totalRequiredHead": "Total required head H_total"
+      }
+    },
+    "module2": {
+      "title": "Module 2: Spray Aeration Calculator",
+      "description": "Calculate saturated oxygen, required oxygen amount and spray efficiency according to TCVN 7222:2002.",
+      "inputParameters": "Input Parameters",
+      "calculationResults": "Calculation Results",
+      "equations": "Equations and Definitions",
+      "fields": {
+        "flowRate": "Flow rate Q",
+        "flowRateUnit": "Flow rate unit",
+        "waterTemperature": "Water temperature t",
+        "fe2Concentration": "Fe²⁺ concentration C_Fe²⁺",
+        "h2sConcentration": "H₂S concentration C_H₂S",
+        "sprayArea": "Spray area A",
+        "aerationEfficiency": "Aeration efficiency η"
+      },
+      "results": {
+        "saturatedOxygen": "Saturated oxygen C_ox",
+        "o2RequiredForFe": "O₂ required for Fe²⁺",
+        "o2RequiredForH2S": "O₂ required for H₂S",
+        "totalRequiredOxygen": "Total required oxygen C_ht",
+        "sprayIntensity": "Spray intensity C_phun",
+        "actualDissolvedOxygen": "Actual dissolved oxygen C_thực",
+        "oxygenSufficient": "Sufficient",
+        "oxygenInsufficient": "Insufficient"
+      }
+    },
+    "module3": {
+      "title": "Module 3: Mixing Reaction Calculator",
+      "description": "Calculate mixing tank volume, reaction rate, and oxidation efficiency according to TCVN 7222:2002.",
+      "inputParameters": "Input Parameters",
+      "calculationResults": "Calculation Results",
+      "equations": "Equations and Definitions",
+      "fields": {
+        "flowRate": "Flow rate Q",
+        "flowRateUnit": "Flow rate unit",
+        "mixingTime": "Mixing time t",
+        "timeUnit": "Time unit",
+        "fe2Initial": "Initial Fe²⁺ concentration",
+        "h2sInitial": "Initial H₂S concentration",
+        "feReactionRate": "Fe²⁺ reaction rate constant k_Fe",
+        "h2sReactionRate": "H₂S reaction rate constant k_H2S",
+        "oxygenConcentration": "Oxygen concentration O₂",
+        "dimensionRatio": "Tank dimension ratio"
+      },
+      "timeUnits": {
+        "second": "Second",
+        "minute": "Minute",
+        "hour": "Hour"
+      },
+      "results": {
+        "tankVolume": "Tank volume V",
+        "length": "Length L",
+        "width": "Width W",
+        "height": "Height H",
+        "feReactionRate": "Fe²⁺ reaction rate r_Fe",
+        "h2sReactionRate": "H₂S reaction rate r_H2S",
+        "feFinalConcentration": "Fe²⁺ concentration after reaction",
+        "h2sFinalConcentration": "H₂S concentration after reaction",
+        "feOxidationEfficiency": "Fe²⁺ oxidation efficiency η_Fe",
+        "h2sOxidationEfficiency": "H₂S oxidation efficiency η_H2S"
+      }
+    },
+    "module4": {
+      "title": "Module 4: Settling Tank Calculator",
+      "description": "Calculate area, volume and settling efficiency according to TCVN 7222:2002, TCVN 33-2006.",
+      "inputParameters": "Input Parameters",
+      "calculationResults": "Calculation Results",
+      "equations": "Equations and Definitions",
+      "fields": {
+        "flowRate": "Flow rate Q",
+        "flowRateUnit": "Flow rate unit",
+        "settlingVelocity": "Settling velocity U_o",
+        "inclinedAngle": "Inclined angle α",
+        "actualHeight": "Actual height H_0",
+        "safetyFactor": "Safety factor α_safety",
+        "tankWidth": "Tank width W"
+      },
+      "results": {
+        "designFlowRate": "Design flow rate Q₁",
+        "settlingArea": "Settling area F",
+        "tankVolume": "Tank volume V",
+        "inclinedHeight": "Inclined height H",
+        "surfaceSettlingVelocity": "Surface settling velocity v",
+        "settlingTime": "Settling time t_lắng",
+        "settlingEfficiency": "Settling efficiency η"
+      }
+    },
+    "module5": {
+      "title": "Module 5: Filtration Calculator",
+      "description": "Calculate filter area, tank diameter and layer heights according to TCVN 33-2006.",
+      "inputParameters": "Input Parameters",
+      "calculationResults": "Calculation Results",
+      "equations": "Equations and Definitions",
+      "fields": {
+        "flowRate": "Flow rate Q",
+        "flowRateUnit": "Flow rate unit",
+        "filtrationVelocity": "Filtration velocity v",
+        "backwashIntensity": "Backwash intensity q",
+        "backwashTime": "Backwash time t_rửa",
+        "numberOfCells": "Number of filter cells n",
+        "bottomCollectionHeight": "Bottom collection height h₁",
+        "filterPlateHeight": "Filter plate height h₂",
+        "supportLayerHeight": "Support layer height h₃",
+        "filterMediaHeight": "Filter media height h₄",
+        "waterLayerHeight": "Water layer height h₅",
+        "protectionHeight": "Protection height h₈"
+      },
+      "results": {
+        "totalFilterArea": "Total filter area f₁",
+        "areaPerCell": "Area per cell f₁'",
+        "actualFilterArea": "Actual filter area F₁",
+        "tankDiameter": "Tank diameter D",
+        "totalFilterHeight": "Total filter height H",
+        "backwashTankHeight": "Backwash tank height h₇",
+        "actualFiltrationVelocity": "Actual filtration velocity v_thực",
+        "backwashFlowRate": "Backwash flow rate Q_rửa"
+      }
+    },
+    "results": {
+      "emptyState": "Please enter your data in the above fields and click \"Calculate\" to see results.",
+      "primaryOutputs": "Primary Outputs",
+      "headLossAnalysis": "Head Loss Analysis",
+      "flowCharacteristics": "Flow Characteristics",
+      "intermediateCalculations": "Intermediate Calculations",
+      "summary": "Summary",
+      "assumptions": "Assumptions",
+      "nextSteps": "Next Steps",
+      "warnings": "⚠️ Warnings",
+      "references": "References",
+      "turbulent": "turbulent",
+      "laminar": "laminar"
+    }
+  },
+  "errors": {
+    "calculationError": "An error occurred during calculation",
+    "apiError": "API error",
+    "networkError": "Network error. Please check your connection."
+  }
+}
+

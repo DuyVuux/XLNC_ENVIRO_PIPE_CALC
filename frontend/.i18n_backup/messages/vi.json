@@ -1,0 +1,331 @@
+{
+  "common": {
+    "search": "Tìm kiếm",
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "calculate": "Tính toán",
+    "calculating": "Đang tính toán...",
+    "required": "Bắt buộc",
+    "optional": "Tùy chọn"
+  },
+  "header": {
+    "search": "Tìm kiếm",
+    "home": "Trang chủ",
+    "modules": "Mô-đun",
+    "engineeringTools": "Công cụ Kỹ thuật",
+    "documentation": "Tài liệu",
+    "industries": "Ngành công nghiệp",
+    "contact": "Liên hệ",
+    "language": {
+      "en": "EN",
+      "vi": "VN"
+    }
+  },
+  "footer": {
+    "modules": "Mô-đun",
+    "module1": "Tính toán Đường ống",
+    "module2": "Sục khí Phun mưa",
+    "module3": "Phản ứng Trộn",
+    "module4": "Bể Lắng",
+    "module5": "Lọc",
+    "support": "Hỗ trợ",
+    "helpCenter": "Trung tâm Trợ giúp",
+    "documentation": "Tài liệu",
+    "api": "API",
+    "community": "Cộng đồng",
+    "resources": "Tài nguyên",
+    "company": "Công ty",
+    "aboutUs": "Về chúng tôi",
+    "careers": "Tuyển dụng",
+    "press": "Báo chí",
+    "privacyPolicy": "Chính sách Bảo mật",
+    "contact": "Liên hệ",
+    "copyright": "© 2024 Hệ thống Kỹ thuật XLNC. Bảo lưu mọi quyền."
+  },
+  "home": {
+    "hero": {
+      "slide1": {
+        "title": "Kỹ thuật Xử lý Nước Tự động",
+        "description": "Tính toán chính xác kích thước đường ống, bể chứa, hệ thống sục khí và lọc.",
+        "button": "Bắt đầu Thiết kế"
+      },
+      "slide2": {
+        "title": "Công cụ Chuyên nghiệp cho Kỹ sư Môi trường",
+        "description": "Được xây dựng cho các nhà máy cấp nước, xử lý nước thải và công nghiệp.",
+        "button": "Khám phá Mô-đun"
+      },
+      "slide3": {
+        "title": "Mô-đun Kỹ thuật XLNC",
+        "description": "Tính toán ống, sục khí, trộn, lắng, lọc.",
+        "button": "Xem Chi tiết"
+      }
+    },
+    "features": {
+      "title": "Tính năng Chính",
+      "feature1": {
+        "title": "Tính toán Kỹ thuật Chính xác",
+        "description": "Kết quả đáng tin cậy và chính xác dựa trên các công thức và phương pháp tốt nhất theo tiêu chuẩn ngành."
+      },
+      "feature2": {
+        "title": "Hỗ trợ 5 Mô-đun Xử lý Nước",
+        "description": "Bộ công cụ toàn diện bao gồm các thành phần cốt lõi trong thiết kế hệ thống xử lý nước."
+      },
+      "feature3": {
+        "title": "Tạo Báo cáo Tự động",
+        "description": "Tạo ngay các báo cáo PDF chuyên nghiệp từ các tính toán và thiết kế của bạn."
+      }
+    },
+    "modules": {
+      "title": "Mô-đun XLNC",
+      "subtitle": "Các mô-đun mạnh mẽ, trực quan cho mọi giai đoạn của dự án kỹ thuật xử lý nước của bạn.",
+      "openModule": "Mở Mô-đun →",
+      "module1": {
+        "title": "Tính toán Đường ống",
+        "description": "Tính toán đường kính ống tối ưu cho các lưu lượng và vật liệu khác nhau."
+      },
+      "module2": {
+        "title": "Sục khí Phun mưa",
+        "description": "Thiết kế hệ thống sục khí hiệu quả cho trao đổi khí và làm sạch."
+      },
+      "module3": {
+        "title": "Phản ứng Trộn",
+        "description": "Mô hình hóa và tính toán kích thước bể trộn hóa chất cho phản ứng hiệu quả."
+      },
+      "module4": {
+        "title": "Bể Lắng",
+        "description": "Thiết kế bể lắng trầm tích để loại bỏ chất rắn hiệu quả."
+      },
+      "module5": {
+        "title": "Lọc",
+        "description": "Thiết kế bộ lọc vật liệu để loại bỏ các hạt lơ lửng khỏi nước."
+      }
+    },
+    "resources": {
+      "title": "Tài nguyên Kỹ thuật",
+      "subtitle": "Truy cập bộ công cụ và dữ liệu để hỗ trợ các quyết định kỹ thuật của bạn.",
+      "resource1": {
+        "title": "Máy tính Kỹ thuật",
+        "description": "Tính toán nhanh cho các công việc kỹ thuật thông thường."
+      },
+      "resource2": {
+        "title": "Tiêu chuẩn Chất lượng Nước",
+        "description": "Tham khảo các thông số chất lượng nước quan trọng theo quy định."
+      },
+      "resource3": {
+        "title": "Hướng dẫn Định liều Hóa chất",
+        "description": "Hướng dẫn cho các hóa chất xử lý nước thông thường."
+      },
+      "resource4": {
+        "title": "Biểu đồ Dòng chảy/Vận tốc",
+        "description": "Biểu đồ tiện dụng cho phân tích dòng chảy và vận tốc ống."
+      }
+    },
+    "whyChoose": {
+      "title": "Tại sao Chọn XLNC?",
+      "subtitle": "XLNC cung cấp một nền tảng mạnh mẽ, thân thiện với người dùng được thiết kế bởi các kỹ sư, dành cho các kỹ sư. Chúng tôi tối ưu hóa quy trình làm việc của bạn để bạn có thể tập trung vào điều quan trọng nhất: mang lại kết quả xuất sắc.",
+      "benefit1": {
+        "title": "Độ chính xác Đáng tin cậy",
+        "description": "Các tính toán của chúng tôi được kiểm tra và xác nhận nghiêm ngặt theo các nguyên tắc kỹ thuật đã được thiết lập."
+      },
+      "benefit2": {
+        "title": "Giao diện Trực quan & Dễ sử dụng",
+        "description": "Giao diện sạch sẽ, logic giúp giảm thời gian học tập và tối đa hóa năng suất."
+      },
+      "benefit3": {
+        "title": "Độ tin cậy Vững chắc",
+        "description": "Được xây dựng trên nền tảng an toàn và ổn định để đảm bảo công việc của bạn luôn an toàn và dễ truy cập."
+      }
+    },
+    "industries": {
+      "title": "Phục vụ các Ngành Công nghiệp Trọng yếu",
+      "industry1": "Nhà máy Cấp nước",
+      "industry2": "Nước thải Công nghiệp",
+      "industry3": "Tư vấn Môi trường",
+      "industry4": "Nhà thầu EPC"
+    }
+  },
+  "modules": {
+    "sidebar": {
+      "title": "Bộ Công cụ Xử lý Nước",
+      "subtitle": "Máy tính Kỹ thuật",
+      "module1": "Thủy lực Đường ống",
+      "module2": "Sục khí Phun mưa",
+      "module3": "Phản ứng Trộn",
+      "module4": "Bể Lắng",
+      "module5": "Lọc"
+    },
+    "topBar": {
+      "title": "XLNC"
+    },
+    "module1": {
+      "title": "Mô-đun 1: Máy tính Thủy lực Đường ống",
+      "description": "Tính toán đường kính ống, vận tốc dòng chảy, tổn thất cột nước và cột áp bơm yêu cầu theo TCVN 33-2006.",
+      "inputParameters": "Thông số Đầu vào",
+      "calculationResults": "Kết quả Tính toán",
+      "equations": "Công thức và Định nghĩa",
+      "fields": {
+        "flowRate": "Lưu lượng Q",
+        "flowRateUnit": "Đơn vị lưu lượng",
+        "pipeLength": "Chiều dài ống L",
+        "heightDifference": "Chênh lệch độ cao Hc",
+        "waterTemperature": "Nhiệt độ nước t",
+        "pipeRoughness": "Độ nhám ống ε",
+        "localLossCoefficient": "Hệ số tổn thất cục bộ β",
+        "pipeMaterial": "Vật liệu ống"
+      },
+      "units": {
+        "m3s": "m³/s",
+        "m3h": "m³/h",
+        "m3day": "m³/ngày"
+      },
+      "results": {
+        "requiredDiameterSuction": "Đường kính yêu cầu (Ống hút) D_h",
+        "requiredDiameterDischarge": "Đường kính yêu cầu (Ống đẩy) D_d",
+        "flowVelocitySuction": "Vận tốc dòng chảy (Ống hút) v_h",
+        "flowVelocityDischarge": "Vận tốc dòng chảy (Ống đẩy) v_d",
+        "frictionHeadLoss": "Tổn thất cột nước do ma sát Htt",
+        "localHeadLoss": "Tổn thất cột nước cục bộ Hcb",
+        "totalHeadLoss": "Tổng tổn thất cột nước H1",
+        "totalRequiredHead": "Tổng cột áp yêu cầu H_total"
+      }
+    },
+    "module2": {
+      "title": "Mô-đun 2: Máy tính Sục khí Phun mưa",
+      "description": "Tính toán oxy bão hòa, lượng oxy cần thiết và hiệu suất phun mưa theo TCVN 7222:2002.",
+      "inputParameters": "Thông số Đầu vào",
+      "calculationResults": "Kết quả Tính toán",
+      "equations": "Công thức và Định nghĩa",
+      "fields": {
+        "flowRate": "Lưu lượng Q",
+        "flowRateUnit": "Đơn vị lưu lượng",
+        "waterTemperature": "Nhiệt độ nước t",
+        "fe2Concentration": "Nồng độ Fe²⁺ C_Fe²⁺",
+        "h2sConcentration": "Nồng độ H₂S C_H₂S",
+        "sprayArea": "Diện tích phun A",
+        "aerationEfficiency": "Hiệu suất sục khí η"
+      },
+      "results": {
+        "saturatedOxygen": "Oxy bão hòa C_ox",
+        "o2RequiredForFe": "Lượng O₂ cần cho Fe²⁺",
+        "o2RequiredForH2S": "Lượng O₂ cần cho H₂S",
+        "totalRequiredOxygen": "Tổng lượng oxy cần thiết C_ht",
+        "sprayIntensity": "Cường độ phun C_phun",
+        "actualDissolvedOxygen": "Oxy hòa tan thực tế C_thực",
+        "oxygenSufficient": "Đủ",
+        "oxygenInsufficient": "Không đủ"
+      }
+    },
+    "module3": {
+      "title": "Mô-đun 3: Máy tính Phản ứng Trộn",
+      "description": "Tính toán thể tích bể trộn, tốc độ phản ứng và hiệu suất oxy hóa theo TCVN 7222:2002.",
+      "inputParameters": "Thông số Đầu vào",
+      "calculationResults": "Kết quả Tính toán",
+      "equations": "Công thức và Định nghĩa",
+      "fields": {
+        "flowRate": "Lưu lượng Q",
+        "flowRateUnit": "Đơn vị lưu lượng",
+        "mixingTime": "Thời gian trộn t",
+        "timeUnit": "Đơn vị thời gian",
+        "fe2Initial": "Nồng độ Fe²⁺ ban đầu",
+        "h2sInitial": "Nồng độ H₂S ban đầu",
+        "feReactionRate": "Hằng số tốc độ phản ứng Fe²⁺ k_Fe",
+        "h2sReactionRate": "Hằng số tốc độ phản ứng H₂S k_H2S",
+        "oxygenConcentration": "Nồng độ oxy O₂",
+        "dimensionRatio": "Tỷ lệ kích thước bể"
+      },
+      "timeUnits": {
+        "second": "Giây",
+        "minute": "Phút",
+        "hour": "Giờ"
+      },
+      "results": {
+        "tankVolume": "Thể tích bể V",
+        "length": "Chiều dài L",
+        "width": "Chiều rộng W",
+        "height": "Chiều cao H",
+        "feReactionRate": "Tốc độ phản ứng Fe²⁺ r_Fe",
+        "h2sReactionRate": "Tốc độ phản ứng H₂S r_H2S",
+        "feFinalConcentration": "Nồng độ Fe²⁺ sau phản ứng",
+        "h2sFinalConcentration": "Nồng độ H₂S sau phản ứng",
+        "feOxidationEfficiency": "Hiệu suất oxy hóa Fe²⁺ η_Fe",
+        "h2sOxidationEfficiency": "Hiệu suất oxy hóa H₂S η_H2S"
+      }
+    },
+    "module4": {
+      "title": "Mô-đun 4: Máy tính Bể Lắng",
+      "description": "Tính toán diện tích, thể tích và hiệu suất lắng theo TCVN 7222:2002, TCVN 33-2006.",
+      "inputParameters": "Thông số Đầu vào",
+      "calculationResults": "Kết quả Tính toán",
+      "equations": "Công thức và Định nghĩa",
+      "fields": {
+        "flowRate": "Lưu lượng Q",
+        "flowRateUnit": "Đơn vị lưu lượng",
+        "settlingVelocity": "Vận tốc lắng U_o",
+        "inclinedAngle": "Góc nghiêng α",
+        "actualHeight": "Chiều cao thực tế H_0",
+        "safetyFactor": "Hệ số an toàn α_safety",
+        "tankWidth": "Chiều rộng bể W"
+      },
+      "results": {
+        "designFlowRate": "Lưu lượng thiết kế Q₁",
+        "settlingArea": "Diện tích lắng F",
+        "tankVolume": "Thể tích bể V",
+        "inclinedHeight": "Chiều cao nghiêng H",
+        "surfaceSettlingVelocity": "Vận tốc lắng bề mặt v",
+        "settlingTime": "Thời gian lắng t_lắng",
+        "settlingEfficiency": "Hiệu suất lắng η"
+      }
+    },
+    "module5": {
+      "title": "Mô-đun 5: Máy tính Lọc",
+      "description": "Tính toán diện tích lọc, đường kính bể và chiều cao các lớp theo TCVN 33-2006.",
+      "inputParameters": "Thông số Đầu vào",
+      "calculationResults": "Kết quả Tính toán",
+      "equations": "Công thức và Định nghĩa",
+      "fields": {
+        "flowRate": "Lưu lượng Q",
+        "flowRateUnit": "Đơn vị lưu lượng",
+        "filtrationVelocity": "Vận tốc lọc v",
+        "backwashIntensity": "Cường độ rửa ngược q",
+        "backwashTime": "Thời gian rửa t_rửa",
+        "numberOfCells": "Số ngăn lọc n",
+        "bottomCollectionHeight": "Chiều cao thu gom đáy h₁",
+        "filterPlateHeight": "Chiều cao tấm lọc h₂",
+        "supportLayerHeight": "Chiều cao lớp đỡ h₃",
+        "filterMediaHeight": "Chiều cao lớp vật liệu lọc h₄",
+        "waterLayerHeight": "Chiều cao lớp nước h₅",
+        "protectionHeight": "Chiều cao bảo vệ h₈"
+      },
+      "results": {
+        "totalFilterArea": "Tổng diện tích lọc f₁",
+        "areaPerCell": "Diện tích mỗi ngăn f₁'",
+        "actualFilterArea": "Diện tích lọc thực tế F₁",
+        "tankDiameter": "Đường kính bể D",
+        "totalFilterHeight": "Tổng chiều cao bể lọc H",
+        "backwashTankHeight": "Chiều cao bể rửa h₇",
+        "actualFiltrationVelocity": "Vận tốc lọc thực tế v_thực",
+        "backwashFlowRate": "Lưu lượng nước rửa Q_rửa"
+      }
+    },
+    "results": {
+      "emptyState": "Vui lòng nhập dữ liệu vào các trường phía trên và nhấn \"Tính toán\" để xem kết quả.",
+      "primaryOutputs": "Kết quả Chính",
+      "headLossAnalysis": "Phân tích Tổn thất Cột nước",
+      "flowCharacteristics": "Đặc tính Dòng chảy",
+      "intermediateCalculations": "Tính toán Trung gian",
+      "summary": "Tóm tắt",
+      "assumptions": "Giả định",
+      "nextSteps": "Bước tiếp theo",
+      "warnings": "⚠️ Cảnh báo",
+      "references": "Tài liệu Tham khảo",
+      "turbulent": "rối",
+      "laminar": "tầng"
+    }
+  },
+  "errors": {
+    "calculationError": "Đã xảy ra lỗi trong quá trình tính toán",
+    "apiError": "Lỗi API",
+    "networkError": "Lỗi mạng. Vui lòng kiểm tra kết nối của bạn."
+  }
+}
+

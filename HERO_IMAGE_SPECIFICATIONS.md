@@ -121,3 +121,4 @@ Với kích thước này, hình ảnh sẽ:
 - ✅ Tự động crop để fit 600px height với `object-cover`
 - ✅ Tương thích với responsive design
 
+
